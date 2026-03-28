@@ -3,36 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AETHER_PROT_v2.1</title>
+<title>AETHER_PROT_v2.2</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 <style>
 body{margin:0;padding:0;background:#000;color:#0ff41;font-family:'Courier New',Courier,monospace;overflow:hidden;cursor:crosshair}
-#_SYS_UI{position:absolute;top:20px;left:20px;pointer-events:none;z-index:10;width:90%}
+#_S{position:absolute;top:20px;left:20px;pointer-events:none;z-index:10;width:90%}
 ._L{font-size:1.2rem;text-shadow:0 0 5px #00ff41;margin-bottom:5px;opacity:0;transition:opacity .5s}
 ._V{opacity:1}
-#_EXEC{display:none;position:absolute;bottom:50px;left:50%;transform:translateX(-50%);padding:18px 36px;background:0 0;border:2px solid #00ff41;color:#00ff41;font-family:inherit;font-size:1.6rem;cursor:pointer;z-index:20;transition:all .3s;text-transform:uppercase;font-weight:700}
-#_EXEC:hover{background:#00ff41;color:#000;box-shadow:0 0 25px #00ff41}
+#_EX{display:none;position:absolute;bottom:50px;left:50%;transform:translateX(-50%);padding:18px 36px;background:0 0;border:2px solid #00ff41;color:#00ff41;font-family:inherit;font-size:1.6rem;cursor:pointer;z-index:20;transition:all .3s;text-transform:uppercase;font-weight:700}
+#_EX:hover{background:#00ff41;color:#000;box-shadow:0 0 25px #00ff41}
 canvas{position:absolute;top:0;left:0;z-index:1}
 </style>
 </head>
 <body>
-<div id="_SYS_UI">
+<div id="_S">
 <div class="_L" id="_L1"></div>
 <div class="_L" id="_L2"></div>
 <div class="_L" id="_L3"></div>
 </div>
-<button id="_EXEC"></button>
+<button id="_EX"></button>
 <script>
 (function(){
-const _K = "eyJlbiI6eyJzIjoiQUVUSEVSX0xPQURJTkciLCJpIjoic3lzdGVtX2xvYWQuc3lzIiwidCI6Im5ldXRyYWxpemVfZnJpY3Rpb24uZXhlIiwiYSI6IkpPSU5fSE9SSVpPTiIsImYiOlsiREVIVCIsIlJFTlQiLCJCSUxMUyIsIkJPU1MiLCJGRUFSIiwiQU5HRVIiLCJIVU5HRVIiXSwiciI6WyJQRUFDRSIsIkZBTUlMWSIsIlJFU1QiLCJTUE9SVFMiLCJBUlQiLCJGT09EIiwiRlJFRURPTSJdfSwicHQiOnsycyI6IkFFVEhFUl9DT05FQ1RBTkRPIiwiaSI6ImNhcnJlZ2FuZG9fc2lzdGVtYS5zeXMiLCJ0IjoidG9xdWVfbmFfZG9yLmV4ZSIsImEiOiJFTlRSQVJfTk9fSE9SSVpPTlRFIiwiZiI6WyJESVZJREFTIiwiQUxVR1VFTCIsIkNPTlRBUyIsIlBBVFJBTyIsIk1FRE8iLCJSQUlWQSIsIkZPTUUiXSwiciI6WyJQQVoiLCJGQU1JTElBIiwiREVTQ0FOU08iLCJFU1BPUlRFIiwiQVJURSIsIkNPTUlQSIsIkxJQkVSREFERSJdfX0=";
-const _G = (s) => JSON.parse(decodeURIComponent(escape(atob(s))));
-const _D = _G(_K);
+const _K = "eyJlbiI6eyJzIjoiQUVUSEVSX0xPQURJTkciLCJpIjoic3lzdGVtX2xvYWQuc3lzIiwidCI6Im5ldXRyYWxpemVfZnJpY3Rpb24uZXhlIiwiYSI6IkpPSU5fSE9SSVpPTiIsImYiOlsiREVIVCIsIlJFTlQiLCJCSUxMUyIsIkJPU1MiLCJGRUFSIiwiQU5HRVIiLCJIVU5HRVIiXSwiciI6WyJQRUFDRSIsIkZBTUlMWSIsIlJFU1QiLCJTUE9SVFMiLCJBUlQiLCJGT09EIiwiRlJFRURPTSJdfSwicHQiOnsycyI6IkFFVEhFUl9DT05FQ1RBTkRPIiwiaSI6ImNhcnJlZ2FuZG9fc2lzdGVtYS5zeXMiLCJ0IjoidG9xdWVfbmFfZG9yLmV4ZSIsImEiOiJFTlRSQVJfTk9fSE9SSVpPTlRFIiwiZiI6WyJESVZJREFTIiwiQUxVR1VFTCIsIkNPTlRBUyIsIlBBVFJBTyIsIk1FRE8iLCJSQUlWQSIsIkZPTUUiXSwiciI6WyJQQVoiLCJGQU1JTElBIiwiREVTQ0FOU08iLCJFU1BPUlRFIiwiQVJURSIsIkNPTUlEQSIsIkxJQkVSREFERSJdfX0=";
+const _G = (s) => JSON.parse(decodeURIComponent(atob(s).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')));
+let _D; try{ _D=_G(_K); }catch(e){ console.error("CRITICAL_AUTH_FAIL"); return; }
 const _LN = navigator.language.split('-')[0]||'en';
 const _C = _D[_LN]||_D.en;
-document.getElementById('_L1').innerText=`> [ ${_C.s} ]`;
+document.getElementById('_L1').innerText=`> [ ${_C.s||_C.ys} ]`;
 document.getElementById('_L2').innerText=`> [ ${_C.i} ]`;
 document.getElementById('_L3').innerText=`> [ ${_C.t} ]`;
-document.getElementById('_EXEC').innerText=_C.a;
+document.getElementById('_EX').innerText=_C.a;
 const {Engine:_E,Render:_R,Runner:_RN,Bodies:_B,Composite:_CP,Events:_EV}=Matter;
 const _eng=_E.create(),_wld=_eng.world;
 const _rnd=_R.create({element:document.body,engine:_eng,options:{width:window.innerWidth,height:window.innerHeight,wireframes:false,background:'transparent'}});
@@ -86,10 +86,10 @@ Matter.Body.applyForce(b,b.position,{x:0,y:-.006});
 if(b.position.y<-150)b.position.y=window.innerHeight+150;
 });
 });
-setTimeout(()=>document.getElementById('_EXEC').style.display='block',6000);
+setTimeout(()=>document.getElementById('_EX').style.display='block',6000);
 }
 _R.run(_rnd);_RN.run(_RN.create(),_eng);
-document.getElementById('_EXEC').onclick=()=>window.location.href='manifesto.html';
+document.getElementById('_EX').onclick=()=>window.location.href='manifesto.html';
 })();
 </script>
 </body>
