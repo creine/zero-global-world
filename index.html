@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AETHER_PROT_v2.2</title>
+<title>AETHER_PROT_v2.3</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 <style>
 body{margin:0;padding:0;background:#000;color:#0ff41;font-family:'Courier New',Courier,monospace;overflow:hidden;cursor:crosshair}
@@ -24,12 +24,16 @@ canvas{position:absolute;top:0;left:0;z-index:1}
 <button id="_EX"></button>
 <script>
 (function(){
-const _K = "eyJlbiI6eyJzIjoiQUVUSEVSX0xPQURJTkciLCJpIjoic3lzdGVtX2xvYWQuc3lzIiwidCI6Im5ldXRyYWxpemVfZnJpY3Rpb24uZXhlIiwiYSI6IkpPSU5fSE9SSVpPTiIsImYiOlsiREVIVCIsIlJFTlQiLCJCSUxMUyIsIkJPU1MiLCJGRUFSIiwiQU5HRVIiLCJIVU5HRVIiXSwiciI6WyJQRUFDRSIsIkZBTUlMWSIsIlJFU1QiLCJTUE9SVFMiLCJBUlQiLCJGT09EIiwiRlJFRURPTSJdfSwicHQiOnsycyI6IkFFVEhFUl9DT05FQ1RBTkRPIiwiaSI6ImNhcnJlZ2FuZG9fc2lzdGVtYS5zeXMiLCJ0IjoidG9xdWVfbmFfZG9yLmV4ZSIsImEiOiJFTlRSQVJfTk9fSE9SSVpPTlRFIiwiZiI6WyJESVZJREFTIiwiQUxVR1VFTCIsIkNPTlRBUyIsIlBBVFJBTyIsIk1FRE8iLCJSQUlWQSIsIkZPTUUiXSwiciI6WyJQQVoiLCJGQU1JTElBIiwiREVTQ0FOU08iLCJFU1BPUlRFIiwiQVJURSIsIkNPTUlEQSIsIkxJQkVSREFERSJdfX0=";
-const _G = (s) => JSON.parse(decodeURIComponent(atob(s).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')));
-let _D; try{ _D=_G(_K); }catch(e){ console.error("CRITICAL_AUTH_FAIL"); return; }
+const _H = (hx) => {
+    let s = "";
+    for (let i = 0; i < hx.length; i += 2) s += String.fromCharCode(parseInt(hx.substr(i, 2), 16));
+    return JSON.parse(decodeURIComponent(escape(s)));
+};
+const _P = "7b22656e223a7b2273223a224145544845525f4c4f4144494e47222c2269223a2273797374656d5f6c6f61642e737973222c2274223a226e65757472616c697a655f6672696374696f6e2e657865222c2261223a224a4f494e5f484f52495a4f4e222c2266223a5b2244454254222c2252454e54222c2242494c4c53222c22424f5353222c2246454152222c22414e474552222c2248554e474552225d2c2272223a5b225045414345222c2246414d494c59222c2252455354222c2253504f525453222c22415254222c22464f4f44222c2246524545444f4d225d7d2c227074223a7b2273223a224145544845525f434152524547414e444f222c2269223a227065736f5f6d6f72746f2e737973222c2274223a22746f7175655f6e615f646f722e657865222c2261223a22454e545241525f4e4f525f484f52495a4f4e5445222c2266223a5b22434f4e544153222c22414c554755454c222c2250415452414f222c2244495649444153222c224d45444f222c225241495641222c22464f4d45225d2c2272223a5b2250415a222c2246414d494c4941222c2244455343414e534f222c224553504f525445222c2241525445222c22434f4d494441222c224c4942455244414445225d7d7d";
+let _D; try{ _D=_H(_P); }catch(e){ return; }
 const _LN = navigator.language.split('-')[0]||'en';
 const _C = _D[_LN]||_D.en;
-document.getElementById('_L1').innerText=`> [ ${_C.s||_C.ys} ]`;
+document.getElementById('_L1').innerText=`> [ ${_C.s} ]`;
 document.getElementById('_L2').innerText=`> [ ${_C.i} ]`;
 document.getElementById('_L3').innerText=`> [ ${_C.t} ]`;
 document.getElementById('_EX').innerText=_C.a;
