@@ -1,128 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-<meta name="description" content="ZEROGLOBAL.WORLD - O Protocolo AETHER foi ativado. O fim da dívida sistêmica e o início da era do tempo humano. Reivindique sua liberdade.">
-<meta name="keywords" content="AETHER, Dívida Zero, Fim do Dinheiro, Futuro, Liberdade Financeira, Evolução Humana">
-<link rel="canonical" href="https://zeroglobal.world/" />
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://zeroglobal.world/">
-<meta property="og:title" content="ZEROGLOBAL.WORLD | AETHER">
-<meta property="og:description" content="O sistema financeiro colapsou. Entre no horizonte.">
-<meta property="og:image" content="https://zeroglobal.world/og-image.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AETHER_PROT_v2.3</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<title id="_DT">ZEROGLOBAL.WORLD</title>
+<meta name="description" id="_MD" content="ZEROGLOBAL.WORLD">
 <style>
-body{margin:0;padding:0;background:#000;color:#0ff41;font-family:'Courier New',Courier,monospace;overflow:hidden;cursor:crosshair}
-#_S{position:absolute;top:20px;left:20px;pointer-events:none;z-index:10;width:90%}
-._L{font-size:1.2rem;text-shadow:0 0 5px #00ff41;margin-bottom:5px;opacity:0;transition:opacity .5s}
-._V{opacity:1}
-#_EX{display:none;position:absolute;bottom:50px;left:50%;transform:translateX(-50%);padding:18px 36px;background:0 0;border:2px solid #00ff41;color:#00ff41;font-family:inherit;font-size:1.6rem;cursor:pointer;z-index:20;transition:all .3s;text-transform:uppercase;font-weight:700}
-#_EX:hover{background:#00ff41;color:#000;box-shadow:0 0 25px #00ff41}
-canvas{position:absolute;top:0;left:0;z-index:1}
+:root{--bg-dark:#000;--bg-light:#fff;--text-main:#f4f4f5;--text-charcoal:#1a1a1a;--accent-cyan:#06b6d4;--grad-tech:linear-gradient(135deg,#3b82f6,#06b6d4);--grad-hope:linear-gradient(45deg,#2ecc71,#3498db);--hl-surge:linear-gradient(45deg,#ff3333,#ff0000);--brand-grad:linear-gradient(135deg,#06b6d4,#3b82f6)}
+*{margin:0;padding:0;box-sizing:border-box;outline:0}
+body{background:var(--bg-dark);color:var(--text-main);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;transition:background 1.5s cubic-bezier(0.4,0,0.2,1),color 1.5s ease}
+#_L{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:2000;background:var(--bg-dark);color:#444;font-size:12px;letter-spacing:4px;font-weight:300;transition:opacity .8s ease}
+#_BG{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center,#0a0a0a 0,#000 100%);z-index:1;animation:bP 8s ease-in-out infinite}
+@keyframes bP{0%,100%{opacity:.6}50%{opacity:1}}
+#_C{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2;opacity:0;transition:opacity 2s ease;pointer-events:none}
+#_P{position:fixed;top:0;left:0;height:2px;background:var(--grad-tech);width:0;z-index:1500;opacity:0;transition:width opacity 1s linear}
+#_X{position:relative;opacity:0;transition:opacity 1.5s ease;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 30px;z-index:10}
+h1{font-size:3.4rem;font-weight:300;letter-spacing:-1.5px;margin:0;max-width:1100px;line-height:1.7;opacity:0;transition:opacity 0.8s ease, transform 0.8s ease;position:relative}
+h1 span.hl{font-weight:600;background:var(--grad-hope);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;opacity:0}
+h1 span.brand{font-weight:800;background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-3px}
+h1 ._lf{color:#ff4444;text-shadow:0 0 20px rgba(255,0,0,0.2);display:inline-block;opacity:0}
+@keyframes _lfA{0%{transform:translateY(15px);opacity:0;filter:blur(10px)}100%{transform:translateY(0);opacity:1;filter:blur(0)}}
+@keyframes _eC{0%{transform:scale(1.02);opacity:0;filter:blur(8px)}100%{transform:scale(1);opacity:1;filter:blur(0)}}
+@keyframes _fS{0%{transform:scale(1);opacity:1}100%{transform:scale(1.08);background:var(--hl-surge);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;opacity:1}}
+@keyframes gO{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(30px);transform:scale(1.03)}}
+.h1_out{animation:gO 0.9s ease-in forwards!important}
+#_CTA{opacity:0;transition:opacity 1.5s ease, transform 1.5s ease;margin-top:80px;display:flex;flex-direction:column;align-items:center;transform:translateY(30px)}
+#_CTA.show{opacity:1;transform:translateY(0)}
+a.b{display:inline-block;padding:26px 70px;background:var(--text-charcoal);color:#fff;text-decoration:none;border-radius:100px;transition:all .5s cubic-bezier(0.19,1,0.22,1);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:1rem;box-shadow:0 20px 40px rgba(0,0,0,0.2)}
+a.b:hover{transform:translateY(-5px);box-shadow:0 30px 60px rgba(0,0,0,0.25)}
+#_SUB{margin-top:40px;font-size:1.3rem;color:var(--text-charcoal);max-width:700px;line-height:1.6;font-weight:600;letter-spacing:-0.2px;opacity:0.9}
+#_SUB b{background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+@media (max-width:768px){h1{font-size:2.4rem;line-height:1.5}#_X{padding:0 20px}a.b{width:100%;padding:22px 30px}#_SUB{font-size:1.1rem}}
 </style>
 </head>
 <body>
-<meta name="description" content="AETHER PROTOCOL INITIALIZED. The end of systemic debt and the beginning of the human time era. Claim your freedom. Zero Global.">
-<meta name="keywords" content="AETHER, Zero Debt, Universal Basic Income, Future, Freedom, Global Protocol, Human Evolution">
-<link rel="canonical" href="https://zeroglobal.world/" />
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://zeroglobal.world/">
-<meta property="og:title" content="ZEROGLOBAL.WORLD | AETHER">
-<meta property="og:description" content="The financial system has collapsed. Enter the horizon.">
-<meta property="og:image" content="https://zeroglobal.world/og-image.png">
-<div id="_S">
-<div class="_L" id="_L1"></div>
-<div class="_L" id="_L2"></div>
-<div class="_L" id="_L3"></div>
+<div id="_L"></div>
+<div id="_BG"></div>
+<canvas id="_C"></canvas>
+<div id="_P"></div>
+<div id="_X">
+  <h1 id="_T"></h1>
+  <div id="_CTA">
+    <a href="manifesto.html" class="b" id="_B"></a>
+    <p id="_SUB"></p>
+  </div>
 </div>
-<button id="_EX"></button>
 <script>
 (function(){
-const _H = (hx) => {
-    let s = "";
-    for (let i = 0; i < hx.length; i += 2) s += String.fromCharCode(parseInt(hx.substr(i, 2), 16));
-    return JSON.parse(decodeURIComponent(escape(s)));
+const _D={
+  en:{
+    t:"ZEROGLOBAL.WORLD",
+    d:"The future is beyond survival.",
+    l:"WELCOME TO THE FUTURE...",
+    m:[
+      "You are living in <span class='hl'>survival mode...</span><br><br>Selling your vital hours to pay for a life <span class='hl'>that isn't yours...</span>",
+      "They made you believe this <br><span class='hl'>rat race</span> is your destiny....<br><br>It is a <span class='_lf'>system lie!</span>",
+      "Artificial Intelligence was not born <br> to <span class='hl'>replace you...</span><br><br>It was born to <span class='hl'>return your freedom!</span>",
+      "The <span class='brand'>ZEROGLOBAL</span> is our escape route!<br><br>An alliance where technology works <span class='hl'>for you</span>.",
+      "Time is your only real asset.<br><br><span class='hl'>What will you do when it's yours again?</span>"
+    ],
+    b:"EXIT SURVIVAL MODE",
+    s:"The future is far beyond what they told us.<br><b>You can be part of this evolution from the very beginning.</b>"
+  },
+  pt:{
+    t:"ZEROGLOBAL.WORLD",
+    d:"O futuro está além da sobrevivência.",
+    l:"BEM VINDO AO FUTURO...",
+    m:[
+      "Você vive no <span class='hl'>modo sobrevivência...</span><br><br>Vendendo suas horas vitais para pagar por uma vida <span class='hl'>que não te pertence...</span>",
+      "Fizeram você acreditar que essa <br><span class='hl'>corrida de ratos</span> é o seu destino....<br><br>É uma <span class='_lf'>mentira do sistema!</span>",
+      "A Inteligência Artificial não nasceu <br> para te <span class='hl'>substituir...</span><br><br>Ela nasceu para <span class='hl'>devolver sua liberdade!</span>",
+      "O <span class='brand'>ZEROGLOBAL</span> é a nossa rota de fuga!<br><br>Uma aliança onde a tecnologia trabalha <span class='hl'>por você</span>.",
+      "O tempo é o seu único ativo real.<br><br><span class='hl'>O que você fará quando ele for seu de novo?</span>"
+    ],
+    b:"SAIR DO MODO SOBREVIVÊNCIA",
+    s:"O futuro está muito além do que nos contaram.<br><b>Você pode participar desta evolução desde o início.</b>"
+  }
 };
-const _P = "7b22656e223a7b2273223a224145544845525f4c4f4144494e47222c2269223a2273797374656d5f6c6f61642e737973222c2274223a226e65757472616c697a655f6672696374696f6e2e657865222c2261223a224a4f494e5f484f52495a4f4e222c2266223a5b2244454254222c2252454e54222c2242494c4c53222c22424f5353222c2246454152222c22414e474552222c2248554e474552225d2c2272223a5b225045414345222c2246414d494c59222c2252455354222c2253504f525453222c22415254222c22464f4f44222c2246524545444f4d225d7d2c227074223a7b2273223a224145544845525f434152524547414e444f222c2269223a227065736f5f6d6f72746f2e737973222c2274223a22746f7175655f6e615f646f722e657865222c2261223a22454e545241525f4e4f525f484f52495a4f4e5445222c2266223a5b22434f4e544153222c22414c554755454c222c2250415452414f222c2244495649444153222c224d45444f222c225241495641222c22464f4d45225d2c2272223a5b2250415a222c2246414d494c4941222c2244455343414e534f222c224553504f525445222c2241525445222c22434f4d494441222c224c4942455244414445225d7d7d";
-let _D; try{ _D=_H(_P); }catch(e){ return; }
-const _LN = navigator.language.split('-')[0]||'en';
-const _C = _D[_LN]||_D.en;
-document.getElementById('_L1').innerText=`> [ ${_C.s} ]`;
-document.getElementById('_L2').innerText=`> [ ${_C.i} ]`;
-document.getElementById('_L3').innerText=`> [ ${_C.t} ]`;
-document.getElementById('_EX').innerText=_C.a;
-const {Engine:_E,Render:_R,Runner:_RN,Bodies:_B,Composite:_CP,Events:_EV}=Matter;
-const _eng=_E.create(),_wld=_eng.world;
-const _rnd=_R.create({element:document.body,engine:_eng,options:{width:window.innerWidth,height:window.innerHeight,wireframes:false,background:'transparent'}});
-const _grd=_B.rectangle(window.innerWidth/2,window.innerHeight+25,window.innerWidth,50,{isStatic:true,render:{visible:false}});
-_CP.add(_wld,_grd);
-let _bds=[],_up=[];
-function _spw(t,x,y,d,c,s){
-const cv=document.createElement('canvas');cv.width=t.length*s*1.2;cv.height=s*2.5;
-const ct=cv.getContext('2d');ct.font=`bold ${s}px 'Courier New'`;ct.fillStyle=c;ct.textAlign='center';
-if(d){ct.shadowColor=c;ct.shadowBlur=15}
-ct.fillText(t,cv.width/2,s*1.5);
-const b=_B.rectangle(x,y,cv.width,cv.height,{render:{sprite:{texture:cv.toDataURL()}},restitution:.6,friction:.1,frictionAir:d?.01:.03,isStatic:false});
-b._isD=d;return b;
+const _L=document.getElementById('_L'),_X=document.getElementById('_X'),_P=document.getElementById('_P'),_T=document.getElementById('_T'),_B=document.getElementById('_B'),_CAN=document.getElementById('_C'),_BG=document.getElementById('_BG'),_CTA=document.getElementById('_CTA'),_SUB=document.getElementById('_SUB');
+let _s=0,_M={x:-1000,y:-1000};
+const _LN=navigator.language.split('-')[0]||'en',_C=_D[_LN]||_D.en;
+_L.innerText=_C.l;
+const _it=setInterval(()=>{_s+=25;if(_s>=100){clearInterval(_it);_L.style.opacity='0';setTimeout(_iP,600);setTimeout(_run,800)}},300);
+window.addEventListener('mousemove',e=>{_M.x=e.clientX;_M.y=e.clientY});
+function _iP(){
+    const c=_CAN.getContext('2d');_CAN.width=window.innerWidth;_CAN.height=window.innerHeight;_CAN.style.opacity='0.4';
+    let p=[];const n=35;
+    for(let i=0;i<n;i++)p.push({x:Math.random()*_CAN.width,y:Math.random()*_CAN.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:1.2});
+    function d(){
+        c.clearRect(0,0,_CAN.width,_CAN.height);c.fillStyle="rgba(6, 182, 212, 0.15)";c.strokeStyle="rgba(6, 182, 212, 0.08)";
+        for(let i=0;i<n;i++){
+            let p1=p[i];p1.x+=p1.vx;p1.y+=p1.vy;
+            if(p1.x<0||p1.x>_CAN.width)p1.vx*=-1;if(p1.y<0||p1.y>_CAN.height)p1.vy*=-1;
+            c.beginPath();c.arc(p1.x,p1.y,p1.r,0,Math.PI*2);c.fill();
+            for(let j=i+1;j<n;j++){
+                let p2=p[j],dJ=Math.sqrt((p1.x-p2.x)**2+(p1.y-p2.y)**2);
+                if(dJ<200){c.beginPath();c.moveTo(p1.x,p1.y);c.lineTo(p2.x,p2.y);c.lineWidth=.4;c.stroke()}
+            }
+        }requestAnimationFrame(d);
+    }d();
 }
-const _sh=(id,ms)=>setTimeout(()=>document.getElementById(id).classList.add('_V'),ms);
-_sh('_L1',500);_sh('_L2',1200);_sh('_L3',2000);
-setTimeout(()=>{
-_C.f.forEach((w,i)=>{
-setTimeout(()=>{
-const b=_spw(w,Math.random()*(window.innerWidth-100)+50,-50,true,'#ff4141',28);
-_bds.push(b);_CP.add(_wld,b);
-},i*600);
-});
-},3000);
-_rnd.canvas.addEventListener('mousedown',e=>{
-const m={x:e.clientX,y:e.clientY};
-const t=_bds.find(b=>Matter.Bounds.contains(b.bounds,m));
-if(t){
-_CP.remove(_wld,t);_bds=_bds.filter(b=>b!==t);
-for(let i=0;i<15;i++){
-const p=_B.circle(t.position.x,t.position.y,2,{render:{fillStyle:'#00ff41'},frictionAir:.05,collisionFilter:{group:-1}});
-_CP.add(_wld,p);setTimeout(()=>_CP.remove(_wld,p),1000);
+function _run(){
+  _L.style.display='none';_X.style.opacity='1';_P.style.opacity='1';
+  _B.innerText=_C.b;_SUB.innerHTML=_C.s;
+  let _i=0;
+  function _nxt(){
+    if(_i<_C.m.length){
+      _T.style.opacity='0';_T.className="";_P.style.transition="none";_P.style.width="0%";
+      let _tL=_C.m[_i].replace(/<[^>]*>?/gm,'').length;
+      let _rD=2500+(_tL*35);
+      let _totalD=_rD+2200;
+      setTimeout(()=>{_P.style.transition="width "+_totalD+"ms linear";_P.style.width="100%"},50);
+      setTimeout(()=>{
+        _T.innerHTML=_C.m[_i];_T.style.opacity='1';
+        let _lf=_T.querySelector('._lf');if(_lf){setTimeout(()=>{_lf.style.animation='_lfA 0.7s ease-out forwards'},400)}
+        let _hls=_T.querySelectorAll('.hl, .brand');if(_hls.length>0){_hls.forEach((h,idx)=>{setTimeout(()=>{h.style.animation='_eC 0.9s ease-out forwards'},idx*200)})}
+        if(_i===_C.m.length-1){
+          setTimeout(()=>{
+            _P.style.opacity='0';_CAN.style.opacity='0';_BG.style.opacity='0';
+            document.body.style.background='var(--bg-light)';
+            document.body.style.color='var(--text-charcoal)';
+            _T.style.color='var(--text-charcoal)';
+            _CTA.classList.add('show');
+          },_totalD-1000);
+        } else {
+            setTimeout(()=>{
+                let _els=_T.querySelectorAll('.hl, ._lf');
+                if(_els.length>0)_els.forEach(h=>h.style.animation='_fS 0.8s ease-out forwards');
+                setTimeout(()=>{
+                    _T.className="h1_out";
+                    setTimeout(_nxt, 1000); 
+                }, 1200);
+            }, _rD);
+        }
+        _i++;
+      },600);
+    }
+  }
+  _nxt();
 }
-if(_bds.length===0)_vct();
-}
-});
-let _v=false;
-function _vct(){
-if(_v)return;_v=true;
-document.getElementById('_L2').innerText=`> [ SYS_STATUS: VOID_CLEARED ]`;
-document.getElementById('_L3').innerText=`> [ INITIALIZING_HORIZON_STATE ]`;
-_C.r.forEach((w,i)=>{
-setTimeout(()=>{
-const b=_spw(w,Math.random()*(window.innerWidth-150)+75,window.innerHeight+100,false,'#00ff41',30);
-_CP.add(_wld,b);_up.push(b);
-},i*800);
-});
-_EV.on(_eng,'afterUpdate',()=>{
-_up.forEach(b=>{
-Matter.Body.applyForce(b,b.position,{x:0,y:-.006});
-if(b.position.y<-150)b.position.y=window.innerHeight+150;
-});
-});
-setTimeout(()=>document.getElementById('_EX').style.display='block',6000);
-}
-_R.run(_rnd);_RN.run(_RN.create(),_eng);
-document.getElementById('_EX').onclick=()=>window.location.href='manifesto.html';
 })();
 </script>
 </body>
-<noscript>
-    <div style="color:#00ff41; background-color:#000; text-align:center; padding:50px; font-family:monospace;">
-        <h1>ZEROGLOBAL.WORLD</h1>
-        <p>> [ AETHER_PROTOCOL: OPERATIONAL ]</p>
-        <p>> [ STATUS: ALL HUMAN DEBT IS VOID ]</p>
-        <p>> Your time is yours again. The era of scarcity is over.</p>
-        <br>
-        <a href="manifesto.html" style="color:#fff;">READ THE MANIFESTO</a>
-    </div>
-</noscript>
 </html>
