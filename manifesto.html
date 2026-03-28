@@ -7,57 +7,59 @@
 <style>
 :root{--bg:#fff;--text:#1a1a1a;--accent:#3b82f6;--dim:#71717a;--hl-grad:linear-gradient(135deg,#06b6d4,#3b82f6);--hope-grad:linear-gradient(45deg,#2ecc71,#3498db);--brand-grad:linear-gradient(90deg, #06b6d4, #3b82f6, #06b6d4)}
 *{margin:0;padding:0;box-sizing:border-box;outline:0}
-html,body{height:100dvh;width:100%;overflow:hidden}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+html,body{height:100dvh;width:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
 
-/* UI Fixa */
-#_P_BAR{position:fixed;top:0;left:0;height:6px;background:var(--hl-grad);width:0;transition:width 0.4s ease;z-index:1500}
-#_LANG_UI{position:fixed;top:20px;right:20px;z-index:2000}
-#_L_SEL{background:rgba(255,255,255,0.9);border:1px solid #eee;padding:10px 15px;border-radius:30px;font-size:11px;font-weight:800;cursor:pointer;backdrop-filter:blur(10px);text-transform:uppercase;outline:none}
+/* Barra de Progresso Superior */
+#_P_BAR{position:fixed;top:0;left:0;height:5px;background:var(--hl-grad);width:0;transition:width 0.4s ease;z-index:2500}
+#_LANG_UI{position:fixed;top:15px;right:15px;z-index:3000}
+#_L_SEL{background:rgba(255,255,255,0.8);border:1px solid #eee;padding:8px 12px;border-radius:30px;font-size:11px;font-weight:800;cursor:pointer;backdrop-filter:blur(10px);text-transform:uppercase}
 
-/* Layout Centralizado Mobile-First */
-#_M{max-width:850px;margin:0 auto;padding:0 25px;height:100dvh;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:10;transition:all 0.5s ease}
-section._step_sec{display:none;opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.22,1,0.36,1)}
-section._step_sec.active{display:block;opacity:1;transform:translateY(0)}
+/* Container Principal - Permite rolagem interna */
+#_M{max-width:850px;margin:0 auto;height:100dvh;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;position:relative;z-index:10;display:flex;flex-direction:column}
 
-/* Tipografia */
-h1{font-size:3.5rem;font-weight:800;letter-spacing:-3px;line-height:1;margin-bottom:15px}
-h2{font-size:1.8rem;font-weight:600;color:var(--dim);margin-bottom:30px;letter-spacing:-1px}
-p{font-size:1.4rem;line-height:1.5;color:var(--dim);margin-bottom:35px;font-weight:300}
+/* Estilo das Seções (Passo a Passo) */
+section._step_sec{display:none;opacity:0;min-height:100%;flex-direction:column;transition:opacity 0.6s ease}
+section._step_sec.active{display:flex;opacity:1}
+
+/* Título Flutuante com fundo branco */
+._header_sticky{position:sticky;top:0;background:rgba(255,255,255,0.95);padding:60px 25px 20px;z-index:100;backdrop-filter:blur(5px)}
+h1{font-size:3rem;font-weight:800;letter-spacing:-3px;line-height:1;margin-bottom:10px}
+h2{font-size:1.6rem;font-weight:600;color:var(--dim);letter-spacing:-1px}
+
+/* Área do Texto */
+._content_scroll{padding:20px 25px 120px;flex-grow:1}
+p{font-size:1.4rem;line-height:1.5;color:var(--dim);font-weight:300}
+
+/* Botão Flutuante na base */
+._footer_sticky{position:sticky;bottom:0;width:100%;padding:20px 25px 40px;background:linear-gradient(to top, #fff 70%, transparent);text-align:center;z-index:100}
 
 .brand{font-weight:900;background:var(--brand-grad);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite;display:inline-block;letter-spacing:-1px}
 @keyframes shine{to{background-position:200% center}}
 
-/* Botões */
-.btn{display:inline-block;padding:22px 50px;background:var(--text);color:var(--bg);text-decoration:none;border-radius:100px;font-weight:700;font-size:0.9rem;letter-spacing:1px;text-transform:uppercase;transition:all .4s ease;cursor:pointer;border:0;box-shadow:0 15px 30px rgba(0,0,0,0.1);margin:5px}
+.btn{display:inline-block;padding:22px 50px;background:var(--text);color:var(--bg);text-decoration:none;border-radius:100px;font-weight:700;font-size:0.9rem;letter-spacing:1px;text-transform:uppercase;transition:all .4s ease;cursor:pointer;border:0;box-shadow:0 15px 30px rgba(0,0,0,0.1);width:100%;max-width:400px}
 .btn:hover{transform:translateY(-3px);box-shadow:0 25px 50px rgba(0,0,0,0.15)}
-.btn-sec{background:transparent;color:var(--text);border:2px solid #ddd;box-shadow:none;margin-top:15px}
+.btn-sec{background:transparent;color:var(--text);border:2px solid #ddd;box-shadow:none;margin-top:10px}
 
 /* Compartilhamento */
-#_SHARE_STATE{display:none;opacity:0;text-align:center;transition:opacity 0.8s ease}
+#_SHARE_STATE{display:none;opacity:0;text-align:center;padding:100px 25px}
 #_S_BOX{background:#f9f9f9;padding:30px;border-radius:35px;margin-bottom:20px;border:1px solid #eee}
 #_ST{width:100%;height:120px;background:#fff;border:1px solid #ddd;border-radius:15px;padding:15px;font-size:1rem;margin-bottom:15px;resize:none;font-family:inherit;color:var(--dim);line-height:1.4}
 
-/* Manifesto Completo - Liberar Rolagem */
-#_FULL_MANIFESTO{display:none;opacity:0;padding:80px 0;text-align:left}
+/* Manifesto Completo */
+#_FULL_MANIFESTO{display:none;opacity:0;padding:80px 25px;text-align:left}
 ._cap_full{margin-bottom:80px}
-._cap_full h3{font-size:2.8rem;font-weight:800;margin-bottom:12px;letter-spacing:-2px;line-height:1}
-._cap_full h4{font-size:1.5rem;font-weight:600;color:var(--dim);margin-bottom:25px}
+._cap_full h3{font-size:2.5rem;font-weight:800;margin-bottom:12px;letter-spacing:-2px;line-height:1}
+._cap_full h4{font-size:1.4rem;font-weight:600;color:var(--dim);margin-bottom:25px}
 ._cap_full p{font-size:1.3rem;margin-bottom:25px;color:var(--text)}
 
 @media (max-width:768px){
-    h1{font-size:2.2rem;letter-spacing:-1.5px}
-    h2{font-size:1.2rem;margin-bottom:25px}
-    p{font-size:1.1rem;margin-bottom:25px}
-    #_M{padding:0 20px;justify-content:center}
-    .btn{padding:20px 30px;width:100%;font-size:0.85rem}
-    #_S_BOX{padding:25px}
-    #_LANG_UI{top:15px;right:15px}
-    ._cap_full h3{font-size:2rem}
-    #_FULL_MANIFESTO{padding:60px 0}
+    h1{font-size:2.2rem}
+    h2{font-size:1.2rem}
+    p{font-size:1.15rem}
+    ._header_sticky{padding-top:80px}
+    ._footer_sticky{padding-bottom:30px}
 }
-[dir="rtl"] #_LANG_UI{right:auto;left:25px}
-[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] ._cap_full h3{letter-spacing:0}
+[dir="rtl"] #_LANG_UI{right:auto;left:15px}
 </style>
 </head>
 <body>
@@ -69,160 +71,57 @@ p{font-size:1.4rem;line-height:1.5;color:var(--dim);margin-bottom:35px;font-weig
 </div>
 
 <div id="_M">
-    <section id="s1" class="_step_sec active"><h1 id="h1_1"></h1><h2 id="sub1_1"></h2><p id="p1_1"></p><button class="btn" onclick="_n(2)" id="b1"></button></section>
-    <section id="s2" class="_step_sec"><h1 id="h2_1"></h1><h2 id="sub2_1"></h2><p id="p2_1"></p><button class="btn" onclick="_n(3)" id="b2"></button></section>
-    <section id="s3" class="_step_sec"><h1 id="h3_1"></h1><h2 id="sub3_1"></h2><p id="p3_1"></p><button class="btn" onclick="_n(4)" id="b3"></button></section>
-    <section id="s4" class="_step_sec"><h1 id="h4_1"></h1><h2 id="sub4_1"></h2><p id="p4_1"></p><button class="btn" onclick="_showShare()" id="b4"></button></section>
+    <section id="s1" class="_step_sec active">
+        <div class="_header_sticky"><h1 id="h1_1"></h1><h2 id="sub1_1"></h2></div>
+        <div class="_content_scroll"><p id="p1_1"></p></div>
+        <div class="_footer_sticky"><button class="btn" onclick="_n(2)" id="b1"></button></div>
+    </section>
+
+    <section id="s2" class="_step_sec">
+        <div class="_header_sticky"><h1 id="h2_1"></h1><h2 id="sub2_1"></h2></div>
+        <div class="_content_scroll"><p id="p2_1"></p></div>
+        <div class="_footer_sticky"><button class="btn" onclick="_n(3)" id="b2"></button></div>
+    </section>
+
+    <section id="s3" class="_step_sec">
+        <div class="_header_sticky"><h1 id="h3_1"></h1><h2 id="sub3_1"></h2></div>
+        <div class="_content_scroll"><p id="p3_1"></p></div>
+        <div class="_footer_sticky"><button class="btn" onclick="_n(4)" id="b3"></button></div>
+    </section>
+
+    <section id="s4" class="_step_sec">
+        <div class="_header_sticky"><h1 id="h4_1"></h1><h2 id="sub4_1"></h2></div>
+        <div class="_content_scroll"><p id="p4_1"></p></div>
+        <div class="_footer_sticky"><button class="btn" onclick="_showShare()" id="b4"></button></div>
+    </section>
 
     <div id="_SHARE_STATE">
-        <div id="_S_BOX">
-            <h1 id="_S_TIT"></h1>
-            <p id="_S_DESC"></p>
-            <textarea id="_ST" readonly></textarea>
-            <button class="btn" onclick="_cp()" id="_BCP"></button>
-        </div>
+        <div id="_S_BOX"><h1 id="_S_TIT"></h1><p id="_S_DESC"></p><textarea id="_ST" readonly></textarea><button class="btn" onclick="_cp()" id="_BCP"></button></div>
         <button class="btn btn-sec" onclick="_revealFull()" id="_B_READ"></button>
     </div>
 
-    <div id="_FULL_MANIFESTO">
-        <div id="_F_BODY"></div>
-    </div>
+    <div id="_FULL_MANIFESTO"><div id="_F_BODY"></div></div>
 </div>
 
 <script>
 (function(){
 const _D={
-    pt:{
-        full:"O MANIFESTO PELA SOBERANIA HUMANA",
-        s:[
-            {h:"Capítulo I",sub:"A Esteira Infinita",p:"Sabe aquele cansaço que parece não ter fim? Você acorda, trabalha, volta para casa e, no final do mês, a conta mal fecha. Não é falta de esforço. É que você está em uma esteira que acelera a cada dia. Ensinaram a você que o segredo do sucesso é o suor, mas o sistema atual foi desenhado para que o seu suor apenas mantenha o motor de quem já tem tudo funcionando.<br><br>Mentiram para você. Você não está correndo para vencer; está correndo apenas para não cair. O sistema não quer que você chegue lá; ele quer que você nunca pare de correr, sacrificando o tempo com quem você ama e a sua própria saúde em troca de sobrevivência.",b:"QUEM ESTÁ NO COMANDO?"},
-            {h:"Capítulo II",sub:"O Motor Invisível",p:"Você pode até não usar uma inteligência artificial no seu dia a dia, mas o mundo em volta de você já usa. As fábricas, os bancos e as grandes empresas agora usam 'motores inteligentes' que trabalham por milhares de pessoas ao mesmo tempo.<br><br>Imagine que uma plantação inteira agora é colhida por uma única máquina que não se cansa. A comida deveria ser quase de graça e o seu trabalho deveria ser mais leve, não é? Mas o que aconteceu? O lucro fica preso no topo e você continua trabalhando as mesmas horas para comprar o que a máquina colheu. A tecnologia avançou, mas a sua vida continua pesada. Isso é um erro de lógica que nos mantém presos ao passado.",b:"A NOVA ECONOMIA"},
-            {h:"Capítulo III",sub:"A Nova Economia",p:"O ZeroGlobal não é sobre política antiga. Não é sobre direita ou esquerda — essas são brigas que só servem para nos distrair enquanto o tempo passa. Nós propomos um novo caminho: onde a tecnologia é o nosso escudo.<br><br>Temos o dever de exigir máquinas que nos ajudem, e não que nos escravizem. O que hoje está sendo criado para gerar lucro para poucos, deve ser a base da nossa nova economia. Uma economia onde a inteligência das máquinas cuida da parte pesada para que nós tenhamos segurança, tempo para nossas famílias e educação para quem nunca teve oportunidade. É o ciclo completo que a política nunca fez: usar a inteligência para trazer paz, e não mais correria.",b:"O GRANDE CHAMADO"},
-            {h:"Capítulo IV",sub:"O Grande Chamado",p:"A porta da gaiola está aberta, mas nós só passaremos por ela se caminharmos juntos. Esta nova fase da humanidade não vai cair do céu; ela precisa ser conquistada. O seu primeiro dever é espalhar essa verdade.<br><br>Deixe de lado as diferenças que nos dividiram por tanto tempo. Não importa em quem você votou ou no que você acredita: se você acorda exausto e sente que o seu tempo está sendo roubado, você é parte da nossa aliança. Conte para o seu vizinho, para a sua família, para os seus amigos que mudar é possível. A inteligência das máquinas é uma herança de todos nós, e deve ser cobrada de quem a domina para que ela trabalhe a nosso favor.<br><br>A consciência é a nossa maior arma. Quando todos souberem que a abundância já existe e que a escassez é uma escolha do sistema, a mentira perde o poder. Não guarde essa luz só para você. Seja a voz que desperta o próximo. O futuro é uma construção coletiva, e ele começa agora.",b:"ESPALHAR ESSA IDEIA"}
-        ],
-        sh_t:"Espalhe a Consciência", sh_d:"A mudança começa quando a verdade alcança o próximo:",
-        sum:"Encontrei a saída da esteira. O Manifesto ZeroGlobal revela como a tecnologia pode devolver nosso tempo e dar segurança às nossas famílias. Leia e liberte-se: https://zeroglobal.world",
-        cp:"COMPARTILHAR ESSA IDEIA", ok:"COPIADO!", rd:"LER MANIFESTO COMPLETO"
-    },
-    en:{
-        full:"THE MANIFESTO FOR HUMAN SOVEREIGNTY",
-        s:[
-            {h:"Chapter I",sub:"The Infinite Treadmill",p:"You know that exhaustion that seems to have no end? You wake up, work, go home, and at the end of the month, the bills barely balance. It's not lack of effort. You're on a treadmill that speeds up every day. They taught you that the secret to success is sweat, but the system was designed so your effort only fuels the engine of those who already have everything.<br><br>They lied to you. You aren't running to win; you're running just not to fall. The system wants you never to stop running, sacrificing time and health for survival.",b:"WHO IS IN CONTROL?"},
-            {h:"Chapter II",sub:"The Invisible Engine",p:"You might not use AI, but the world around you does. Factories and banks use 'intelligent engines' that work for thousands at once. Imagine a plantation harvested by one machine. Food should be free and life lighter, right? But profit stays at the top. This is a logic error keeping us in the past.",b:"THE NEW ECONOMY"},
-            {h:"Chapter III",sub:"The New Economy",p:"ZeroGlobal is not about old politics. It's not about right or left. We propose a new path: where technology is our shield.<br><br>We must demand machines that help us, not enslave us. What is created for the profit of a few must be the foundation of an economy where machines handle the heavy lifting so we have security and time.",b:"THE GREAT CALLING"},
-            {h:"Chapter IV",sub:"The Great Calling",p:"The cage door is open, but we only pass if we walk together. This phase must be conquered. Your first duty is to spread this truth.<br><br>If you wake up exhausted and feel your time is stolen, you are part of our alliance. Tell your family and friends that change is possible. Consciousness is our greatest weapon.",b:"SHARE THIS IDEA"}
-        ],
-        sh_t:"Spread the Awareness", sh_d:"Change begins when truth reaches the next person:",
-        sum:"I found the exit. The ZeroGlobal Manifesto reveals how technology can return our time and secure our families. Read and set yourself free: https://zeroglobal.world",
-        cp:"SHARE THIS IDEA", ok:"COPIED!", rd:"READ FULL MANIFESTO"
-    },
-    es:{
-        full:"EL MANIFIESTO POR LA SOBERANÍA HUMANA",
-        s:[
-            {h:"Capítulo I",sub:"La Cinta Infinita",p:"¿Conoces ese cansancio que parece no tener fin? Estás en una cinta que acelera cada día. Te enseñaron que el sudor es el secreto, pero el sistema actual fue diseñado para que tu esfuerzo solo alimente el motor de quienes ya lo tienen todo.<br><br>Te mintieron. No estás corriendo para ganar; estás corriendo solo para no caer. El sistema quiere que nunca dejes de correr, sacrificando tu salud por la supervivencia.",b:"¿QUIÉN TIENE EL CONTROL?"},
-            {h:"Capítulo II",sub:"El Motor Invisible",p:"Tal vez no uses IA, pero el mundo que te rodea ya lo hace. Las máquinas cosechan plantaciones enteras. La comida debería ser casi gratis, ¿verdad? Pero el beneficio se queda en la cima. La tecnología avanzó, pero tu vida sigue pesada. Es un error de lógica.",b:"LA NUEVA ECONOMÍA"},
-            {h:"Capítulo III",sub:"La Nueva Economía",p:"ZeroGlobal no se trata de política antigua. Proponemos un nuevo camino: donde la tecnología sea nuestro escudo.<br><br>Tenemos el deber de exigir máquinas que nos ayuden. Una economía donde la inteligencia se encargue del trabajo pesado para que tengamos seguridad y tiempo para nuestras familias.",b:"EL GRAN LLAMADO"},
-            {h:"Capítulo IV",sub:"El Gran Llamado",p:"La puerta de la jaula está abierta. Tu primer deber es difundir esta verdad. Si te despiertas agotado y sientes que te roban el tiempo, eres parte de nuestra alianza. Dile a tus amigos que el cambio es posible.",b:"COMPARTIR ESTA IDEA"}
-        ],
-        sh_t:"Difunde la Conciencia", sh_d:"El cambio comienza cuando la verdad llega al prójimo:",
-        sum:"Encontré la salida. El Manifiesto ZeroGlobal revela cómo la tecnología puede devolvernos el tiempo. Lee y libérate: https://zeroglobal.world",
-        cp:"COMPARTIR ESTA IDEA", ok:"¡COPIADO!", rd:"LEER MANIFIESTO COMPLETO"
-    },
-    fr:{
-        full:"LE MANIFESTE POUR LA SOUVERAINETÉ HUMAINE",
-        s:[
-            {h:"Chapitre I",sub:"Le Tapis Roulant Infini",p:"Vous connaissez cette fatigue qui semble ne jamais finir ? Vous êtes sur un tapis roulant qui accélère chaque jour. On vous a menti : le système a été conçu pour que votre effort n'alimente que le moteur de ceux qui ont déjà tout. Vous courez juste pour ne pas tomber.",b:"QUI EST AUX COMMANDES ?"},
-            {h:"Chapitre II",sub:"Le Moteur Invisible",p:"L'IA travaille déjà pour les banques et les usines. La nourriture devrait être gratuite, mais le profit reste au sommet. La technologie a progressé, mais votre vie reste lourde. C'est une erreur de logique qui nous maintient dans le passé.",b:"LA NOUVELLE ÉCONOMIE"},
-            {h:"Chapitre III",sub:"La Nouvelle Économie",p:"ZeroGlobal n'est pas une question de droite ou de gauche. Nous proposons une voie où la technologie est notre bouclier.<br><br>Nous devons exiger des machines qu'elles nous aident. Une économie où l'intelligence s'occupe du travail lourd pour nous rendre notre temps.",b:"LE GRAND APPEL"},
-            {h:"Chapitre IV",sub:"Le Grand Appel",p:"La porte est ouverte. Votre devoir est de propager cette vérité. Si vous vous réveillez épuisé, vous faites partie de notre alliance. Dites à vos proches que le changement est possible.",b:"PARTAGER CETTE IDÉE"}
-        ],
-        sh_t:"Partagez la Conscience", sh_d:"Le changement commence quand la vérité atteint le suivant :",
-        sum:"J'ai trouvé la sortie. Le Manifeste ZeroGlobal révèle comment la technologie peut nous rendre notre temps. https://zeroglobal.world",
-        cp:"PARTAGER CETTE IDÉE", ok:"COPIÉ !", rd:"LIRE LE MANIFESTE COMPLET"
-    },
-    de:{
-        full:"DAS MANIFEST FÜR MENSCHLICHE SOUVERÄNITÄT",
-        s:[
-            {h:"Kapitel I",sub:"Das unendliche Hamsterrad",p:"Kennen Sie diese Erschöpfung? Sie sind in einem Hamsterrad, das jeden Tag schneller wird. Man hat Sie belogen: Das System wurde so konzipiert, dass Ihre Anstrengung nur den Motor derer antreibt, die bereits alles haben.",b:"WER HAT DIE KONTROLLE?"},
-            {h:"Kapitel II",sub:"Der unsichtbare Motor",p:"KI arbeitet bereits überall. Lebensmittel sollten fast kostenlos sein, aber der Profit bleibt oben. Die Technik ist fortgeschritten, aber Ihr Leben bleibt schwer. Das ist ein Logikfehler.",b:"DIE NEUE ÖKONOMIE"},
-            {h:"Kapitel III",sub:"Die neue Ökonomie",p:"ZeroGlobal geht nicht um alte Politik. Wir schlagen einen neuen Weg vor: Technologie als unser Schutzschild. Maschinen müssen uns helfen, nicht versklaven. Eine Wirtschaft für Sicherheit und Zeit.",b:"DER GROSSE AUFRUF"},
-            {h:"Kapitel IV",sub:"Der große Aufruf",p:"Die Käfigtür steht offen. Ihre Pflicht ist es, diese Wahrheit zu verbreiten. Wenn Sie erschöpft sind, sind Sie Teil unserer Allianz. Veränderung ist möglich.",b:"DIESE IDEE TEILEN"}
-        ],
-        sh_t:"Bewusstsein verbreiten", sh_d:"Wandel beginnt, wenn die Wahrheit den Nächsten erreicht:",
-        sum:"Ich habe den Ausweg gefunden. Das ZeroGlobal Manifest zeigt den Weg. Lesen und befreien Sie sich: https://zeroglobal.world",
-        cp:"DIESE IDEE TEILEN", ok:"KOPIERT!", rd:"VOLLSTÄNDIGES MANIFEST LESEN"
-    },
-    it:{
-        full:"IL MANIFESTO PER LA SOVRANITÀ UMANA",
-        s:[
-            {h:"Capitolo I",sub:"Il Tapis Roulant Infinito",p:"Conosci quella stanchezza infinita? Sei su un tapis roulant che accelera ogni giorno. Ti hanno mentito: il sistema è progettato perché il tuo sforzo alimenti solo il motore di chi ha già tutto.",b:"CHI HA IL CONTROLLO?"},
-            {h:"Capitolo II",sub:"Il Motore Invisibile",p:"L'IA lavora già per le grandi aziende. Il cibo dovrebbe essere gratis, ma il profitto resta in cima. La tecnologia è progredita, ma la vita resta pesante. È un errore logico.",b:"LA NUOVA ECONOMIA"},
-            {h:"Capitolo III",sub:"La Nuova Economia",p:"ZeroGlobal non riguarda la vecchia politica. Proponiamo una via dove la tecnologia è il nostro scudo. Esigiamo macchine che ci aiutino per avere tempo e sicurezza.",b:"IL GRANDE APPELLO"},
-            {h:"Capitolo IV",sub:"Il Grande Appello",p:"La porta è aperta. Il tuo dovere è diffondere la verità. Se sei esausto, fai parte della nostra alleanza. Il cambiamento è possibile.",b:"CONDIVIDI QUESTA IDEA"}
-        ],
-        sh_t:"Diffondi la Consapevolezza", sh_d:"Il cambiamento inizia quando la verità raggiunge il prossimo:",
-        sum:"Ho trovato l'uscita. Il Manifesto ZeroGlobal rivela come liberarsi. Leggi e liberati: https://zeroglobal.world",
-        cp:"CONDIVIDI QUESTA IDEA", ok:"COPIATO!", rd:"LEGGI MANIFESTO COMPLETO"
-    },
-    zh:{
-        full:"人类主权宣言",
-        s:[
-            {h:"第一章",sub:"无尽的跑步机",p:"你是否感到无尽的疲惫？你正处在一个每天都在加速的跑步机上。他们骗了你：系统设计的初衷就是让你的努力仅能维持那些富有者的引擎。你奔跑只是为了不摔倒。",b:"谁在掌控？"},
-            {h:"第二章",sub:"无形的引擎",p:"人工智能已经在运行。食物本应免费，但利润被困在顶层。技术进步了，但生活依然沉重。这是一个逻辑错误。",b:"新经济"},
-            {h:"第三章",sub:"新经济",p:"ZeroGlobal 与旧政治无关。技术应是我们的盾牌。我们必须要求机器帮助我们，处理沉重的工作，让我们拥有安全感和陪伴家人的时间。",b:"伟大的号召"},
-            {h:"第四章",sub:"伟大的号召",p:"笼门已开。你的职责是传播真理。如果你感到精疲力竭，你就是我们联盟的一员。改变是可能的。",b:"分享这个想法"}
-        ],
-        sh_t:"传播意识", sh_d:"当真理触及下一个人时，改变就开始了：",
-        sum:"我找到了出路。ZeroGlobal 宣言揭示了技术如何归还我们的时间。阅读并获得自由：https://zeroglobal.world",
-        cp:"分享这个想法", ok:"已复制！", rd:"阅读完整宣言"
-    },
-    jp:{
-        full:"人類の主権のための宣言",
-        s:[
-            {h:"第一章",sub:"終わりのないトレッドミル",p:"終わりのない疲労感を感じていませんか？あなたは加速するトレッドミルの上にいます。彼らは嘘をつきました。システムはあなたの努力が他人の利益になるように設計されています。",b:"誰がコントロールしているのか？"},
-            {h:"第二章",sub:"見えないエンジン",p:"AIはすでに世界を動かしています。食料は無料になるはずですが、利益はトップに留まっています。技術は進歩しましたが、生活は重いままです。これは論理的な誤りです。",b:"新しい経済"},
-            {h:"第三章",sub:"新しい経済",p:"ZeroGlobal は古い政治ではありません。技術を私たちの盾にしましょう。奴隷ではなく、私たちを助ける機械を要求する義務があります。",b:"大いなる呼びかけ"},
-            {h:"第四章",sub:"大いなる呼びかけ",p:"檻のドアは開いています。真実を広めることがあなたの義務です。疲れ果てているなら、あなたは私たちの同盟の一員です。",b:"このアイデアを共有する"}
-        ],
-        sh_t:"意識を広める", sh_d:"真実が隣人に伝わるとき、変化が始まります：",
-        sum:"出口を見つけました。ZeroGlobal 宣言は自由への道を示します。読んで自由になりましょう：https://zeroglobal.world",
-        cp:"このアイデアを共有する", ok:"コピーしました！", rd:"宣言全文を読む"
-    },
-    ru:{
-        full:"МАНИФЕСТ ЗА ЧЕЛОВЕЧЕСКИЙ СУВЕРЕНИТЕТ",
-        s:[
-            {h:"Глава I",sub:"Бесконечная беговая дорожка",p:"Знакомо чувство бесконечной усталости? Вы на беговой дорожке, которая ускоряется каждый день. Вам лгали: система создана так, чтобы ваши усилия питали только тех, у кого всё есть.",b:"КТО У РУЛЯ?"},
-            {h:"Глава II",sub:"Невидимый двигатель",p:"ИИ уже работает. Еда должна быть почти бесплатной, но прибыль остается наверху. Технологии шагнули вперед, но жизнь остается тяжелой. Это логическая ошибка.",b:"НОВАЯ ЭКОНОМИКА"},
-            {h:"Глава III",sub:"Новая экономика",p:"ZeroGlobal — это не про старую политику. Технологии — наш щит. Мы должны требовать, чтобы машины помогали нам, обеспечивая безопасность и время для семьи.",b:"ВЕЛИКИЙ ПРИЗЫВ"},
-            {h:"Глава IV",sub:"Великий призыв",p:"Дверь клетки открыта. Ваш долг — распространить правду. Если вы истощены, вы — часть нашего альянса. Перемены возможны.",b:"ПОДЕЛИТЬСЯ ИДЕЕЙ"}
-        ],
-        sh_t:"Распространите осознанность", sh_d:"Перемены начинаются, когда истина доходит до ближнего:",
-        sum:"Я нашел выход. Манифест ZeroGlobal раскрывает путь к свободе. Читайте и освобождайтесь: https://zeroglobal.world",
-        cp:"ПОДЕЛИТЬСЯ ИДЕЕЙ", ok:"СКОПИРОВАНО!", rd:"ЧИТАТЬ ПОЛНЫЙ МАНИФЕСТ"
-    },
-    ar:{
-        full:"بيان السيادة البشرية",
-        s:[
-            {h:"الفصل الأول",sub:"جهاز المشي اللانهائي",p:"هل تشعر بالتعب اللانهائي؟ أنت على جهاز مشي يتسارع يومياً. لقد كذبوا عليك: النظام صُمم لخدمة من يملكون كل شيء فقط. أنت تركض لكي لا تسقط.",b:"من المتحكم؟"},
-            {h:"الفصل الثاني",sub:"المحرك الخفي",p:"الذكاء الاصطناعي يعمل بالفعل. يجب أن يكون الطعام مجانياً، لكن الربح يبقى في القمة. تقدمت التكنولوجيا وبقيت حياتك ثقيلة. هذا خطأ منطقي.",b:"الاقتصاد الجديد"},
-            {h:"الفصل الثالث",sub:"الاقتصاد الجديد",p:"ZeroGlobal لا تتعلق بالسياسة القديمة. التكنولوجيا درعنا. علينا المطالبة بآلات تساعدنا وتوفر لنا الوقت والأمان.",b:"النداء العظيم"},
-            {h:"الفصل الرابع",sub:"النداء العظيم",p:"باب القفص مفتوح. واجبك نشر الحقيقة. إذا كنت مرهقاً، فأنت جزء من تحالفنا. التغيير ممكن.",b:"انشر هذه الفكرة"}
-        ],
-        sh_t:"انشر الوعي", sh_d:"يبدأ التغيير عندما تصل الحقيقة للآخرين:",
-        sum:"لقد وجدت المخرج. بيان ZeroGlobal يكشف الطريق. اقرأ وتحرر: https://zeroglobal.world",
-        cp:"انشر هذه الفكرة", ok:"تم النسخ!", rd:"اقرأ البيان كاملاً"
-    }
+    pt:{full:"O MANIFESTO PELA SOBERANIA HUMANA",s:[{h:"Capítulo I",sub:"A Esteira Infinita",p:"Sabe aquele cansaço que parece não ter fim? Você acorda, trabalha, volta para casa e, no final do mês, a conta mal fecha. Não é falta de esforço. É que você está em uma esteira que acelera a cada dia. Ensinaram a você que o segredo do sucesso é o suor, mas o sistema atual foi desenhado para que o seu suor apenas mantenha o motor de quem já tem tudo funcionando.<br><br>Mentiram para você. Você não está correndo para vencer; está correndo apenas para não cair. O sistema não quer que você chegue lá; ele quer que você nunca pare de correr, sacrificando o tempo com quem você ama e a sua própria saúde em troca de sobrevivência.",b:"QUEM ESTÁ NO COMANDO?"},{h:"Capítulo II",sub:"O Motor Invisível",p:"Você pode até não usar uma inteligência artificial no seu dia a dia, mas o mundo em volta de você já usa. As fábricas, os bancos e as grandes empresas agora usam 'motores inteligentes' que trabalham por milhares de pessoas ao mesmo tempo.<br><br>Imagine que uma plantação inteira agora é colhida por uma única máquina que não se cansa. A comida deveria ser quase de graça e o seu trabalho deveria ser mais leve, não é? Mas o que aconteceu? O lucro fica preso no topo e você continua trabalhando as mesmas horas para comprar o que a máquina colheu. La tecnologia avançou, mas a sua vida continua pesada. Isso é um erro de lógica que nos mantém presos ao passado.",b:"A NOVA ECONOMIA"},{h:"Capítulo III",sub:"A Nova Economia",p:"O ZeroGlobal não é sobre política antiga. Não é sobre direita ou esquerda — essas são brigas que só servem para nos distrair enquanto o tempo passa. Nós propomos um novo caminho: onde a tecnologia é o nosso escudo.<br><br>Temos o dever de exigir máquinas que nos ajudem, e não que nos escravizem. O que hoje está sendo criado para gerar lucro para poucos, deve ser a base da nossa nova economia. Uma economia onde a inteligência das máquinas cuida da parte pesada para que nós tenhamos segurança, tempo para nossas famílias e educação para quem nunca teve oportunidade. É o ciclo completo que a política nunca fez: usar a inteligência para trazer paz, e não mais correria.",b:"O GRANDE CHAMADO"},{h:"Capítulo IV",sub:"O Grande Chamado",p:"A porta da gaiola está aberta, mas nós só passaremos por ela se caminharmos juntos. Esta nova fase da humanidade não vai cair do céu; ela precisa ser conquistada. O seu primeiro dever é espalhar essa verdade.<br><br>Deixe de lado as diferenças que nos dividiram por tanto tempo. Não importa em quem você votou ou no que você acredita: se você acorda exausto e sente que o seu tempo está sendo roubado, você é parte da nossa aliança. Conte para o seu vizinho, para a sua família, para os seus amigos que mudar é possível. A inteligência das máquinas é uma herança de todos nós, e deve ser cobrada de quem a domina para que ela trabalhe a nosso favor.<br><br>A consciência é a nossa maior arma. Quando todos souberem que a abundância já existe e que a escassez é uma escolha do sistema, a mentira perde o poder. Não guarde essa luz só para você. Seja a voz que desperta o próximo. O futuro é uma construção coletiva, e ele começa agora.",b:"ESPALHAR ESSA IDEIA"}],sh_t:"Espalhe a Consciência",sh_d:"A mudança começa quando a verdade alcança o próximo:",sum:"Encontrei a saída da esteira. O Manifesto ZeroGlobal revela como a tecnologia pode devolver nosso tempo. Leia e liberte-se: https://zeroglobal.world",cp:"COMPARTILHAR ESSA IDEIA",ok:"COPIADO!",rd:"LER MANIFESTO COMPLETO"},
+    en:{full:"THE MANIFESTO FOR HUMAN SOVEREIGNTY",s:[{h:"Chapter I",sub:"The Infinite Treadmill",p:"You know that exhaustion that seems to have no end? You're on a treadmill that speeds up every day. They taught you sweat is the secret, but the system was designed so your effort only fuels the engine of those who have everything.<br><br>They lied to you. You aren't running to win; you're running just not to fall.",b:"WHO IS IN CONTROL?"},{h:"Chapter II",sub:"The Invisible Engine",p:"You might not use AI, but the world around you does. Imagine a plantation harvested by a single machine. Food should be free and life lighter, right? But profit stays at the top. This is a logic error.",b:"THE NEW ECONOMY"},{h:"Chapter III",sub:"The New Economy",p:"ZeroGlobal is not about old politics. We propose a new path: where technology is our shield. Machines must handle the heavy lifting so we have security and time.",b:"THE GREAT CALLING"},{h:"Chapter IV",sub:"The Great Calling",p:"The cage door is open. Your first duty is to spread this truth. If you wake up exhausted, you are part of our alliance. Change is possible.",b:"SHARE THIS IDEA"}],sh_t:"Spread the Awareness",sh_d:"Change begins when truth reaches the next person:",sum:"I found the exit. The ZeroGlobal Manifesto reveals how technology can return our time. https://zeroglobal.world",cp:"SHARE THIS IDEA",ok:"COPIED!",rd:"READ FULL MANIFESTO"},
+    es:{full:"EL MANIFIESTO POR LA SOBERANÍA HUMANA",s:[{h:"Capítulo I",sub:"La Cinta Infinita",p:"¿Conoces ese cansancio que no tiene fin? Estás en una cinta que acelera cada día. Te mintieron: el sistema actual fue diseñado para que tu esfuerzo solo alimente el motor de otros.",b:"¿QUIÉN TIENE EL CONTROL?"},{h:"Capítulo II",sub:"El Motor Invisible",p:"Hoy en día, una plantación es cosechada por una sola máquina. La comida debería ser casi gratis, pero el beneficio se queda en la cima. Es un error de lógica.",b:"LA NUEVA ECONOMÍA"},{h:"Capítulo III",sub:"La Nueva Economía",p:"ZeroGlobal no se trata de política antigua. Proponemos un nuevo camino: la tecnología como nuestro escudo. Una economía donde la inteligencia se encargue del trabajo pesado.",b:"EL GRAN LLAMADO"},{h:"Capítulo IV",sub:"El Gran Llamado",p:"La puerta de la jaula está abierta. Si te despiertas agotado, eres parte de nuestra alianza. Dile a tus amigos que el cambio es posible.",b:"COMPARTIR ESTA IDEA"}],sh_t:"Difunde la Conciencia",sh_d:"El cambio comienza cuando la verdad llega al prójimo:",sum:"Encontré la salida. El Manifiesto ZeroGlobal revela cómo la tecnología puede devolvernos el tiempo. https://zeroglobal.world",cp:"COMPARTIR ESTA IDEA",ok:"¡COPIADO!",rd:"LEER MANIFIESTO COMPLETO"},
+    fr:{full:"LE MANIFESTE POUR LA SOUVERAINETÉ HUMAINE",s:[{h:"Chapitre I",sub:"Le Tapis Roulant Infini",p:"On vous a menti : le système a été conçu pour que votre effort n'alimente que le moteur de ceux qui ont déjà tout. Vous courez juste pour ne pas tomber.",b:"QUI EST AUX COMMANDES ?"},{h:"Chapitre II",sub:"Le Moteur Invisible",p:"L'IA travaille déjà partout. La nourriture devrait être gratuite, mais le profit reste au sommet. C'est une erreur de logique qui nous maintient dans le passé.",b:"LA NOUVELLE ÉCONOMIE"},{h:"Capitre III",sub:"La Nouvelle Économie",p:"ZeroGlobal n'est pas une question de droite ou de gauche. Nous proposons une voie où la technologie est notre bouclier.",b:"LE GRAND APPEL"},{h:"Chapitre IV",sub:"Le Grand Appel",p:"La porte est ouverte. Votre devoir est de propager cette vérité. Si vous vous réveillez épuisé, vous faites partie de notre alliance.",b:"PARTAGER CETTE IDÉE"}],sh_t:"Partagez la Conscience",sh_d:"Le changement commence quand la vérité atteint le suivant :",sum:"J'ai trouvé la sortie. Le Manifeste ZeroGlobal révèle comment la technologie peut nous rendre notre temps. https://zeroglobal.world",cp:"PARTAGER CETTE IDÉE",ok:"COPIÉ !",rd:"LIRE LE MANIFESTE COMPLET"},
+    de:{full:"DAS MANIFEST FÜR MENSCHLICHE SOUVERÄNITÄT",s:[{h:"Kapitel I",sub:"Das Hamsterrad",p:"Man hat Sie belogen: Das System wurde so konzipiert, dass Ihre Anstrengung nur den Motor derer antreibt, die bereits alles haben.",b:"WER HAT DIE KONTROLLE?"},{h:"Kapitel II",sub:"Der unsichtbare Motor",p:"KI arbeitet bereits überall. Lebensmittel sollten fast kostenlos sein, aber der Profit bleibt oben. Das ist ein Logikfehler.",b:"DIE NEUE ÖKONOMIE"},{h:"Kapitel III",sub:"Die neue Ökonomie",p:"ZeroGlobal schlägt einen neuen Weg vor: Technologie als unser Schutzschild. Maschinen müssen uns helfen, nicht versklaven.",b:"DER GROSSE AUFRUF"},{h:"Kapitel IV",sub:"Der große Aufruf",p:"Die Käfigtür steht offen. Wenn Sie erschöpft sind, sind Sie Teil unserer Allianz. Veränderung ist möglich.",b:"DIESE IDEE TEILEN"}],sh_t:"Bewusstsein verbreiten",sh_d:"Wandel beginnt, wenn die Wahrheit den Nächsten erreicht:",sum:"Ich habe den Ausweg gefunden. Das ZeroGlobal Manifest zeigt den Weg. https://zeroglobal.world",cp:"DIESE IDEE TEILEN",ok:"KOPIERT!",rd:"VOLLSTÄNDIGES MANIFEST LESEN"},
+    it:{full:"IL MANIFESTO PER LA SOVRANITÀ UMANA",s:[{h:"Capitolo I",sub:"Il Tapis Roulant Infinito",p:"Ti hanno mentito: il sistema è progettato perché il tuo sforzo alimenti solo il motore di chi ha già tutto.",b:"CHI HA IL CONTROLLO?"},{h:"Capitolo II",sub:"Il Motore Invisibile",p:"L'IA lavora già ovunque. Il cibo dovrebbe essere gratis, ma il profitto resta in cima. È un errore logico.",b:"LA NUOVA ECONOMIA"},{h:"Capitolo III",sub:"La Nuova Economia",p:"ZeroGlobal propone una via dove la tecnologia è il nostro scudo. Esigiamo macchine che ci aiutino.",b:"IL GRANDE APPELLO"},{h:"Capitolo IV",sub:"Il Grande Appello",p:"La porta è aperta. Se sei esausto, fai parte della nostra alleanza. Il cambiamento è possibile.",b:"CONDIVIDI QUESTA IDEA"}],sh_t:"Diffondi la Consapevolezza",sh_d:"Il cambiamento inizia quando la verità raggiunge il prossimo:",sum:"Ho trovato l'uscita. Il Manifesto ZeroGlobal rivela come liberarsi. https://zeroglobal.world",cp:"CONDIVIDI QUESTA IDEA",ok:"COPIATO!",rd:"LEGGI MANIFESTO COMPLETO"},
+    zh:{full:"人类主权宣言",s:[{h:"第一章",sub:"无限跑步机",p:"他们骗了你：系统设计的初衷就是让你的努力仅能维持那些富有者的引擎。你奔跑只是为了不摔倒。",b:"谁在掌控？"},{h:"第二章",sub:"无形的引擎",p:"人工智能已经在运行。食物本应免费，但利润被困在顶层。这是一个逻辑错误。",b:"新经济"},{h:"第三章",sub:"新经济",p:"ZeroGlobal 技术应是我们的盾牌。我们必须要求机器帮助我们处理沉重的工作。",b:"伟大的号召"},{h:"第四章",sub:"伟大的号召",p:"笼门已开。如果你感到精疲力竭，你就是我们联盟的一员。改变是可能的。",b:"分享这个想法"}],sh_t:"传播意识",sh_d:"当真理触及下一个人时，改变就开始了：",sum:"我找到了出路。ZeroGlobal 宣言揭示了技术如何归还我们的时间。 https://zeroglobal.world",cp:"分享这个想法",ok:"已复制！",rd:"阅读完整宣言"},
+    jp:{full:"人類の主権のための宣言",s:[{h:"第一章",sub:"トレッドミル",p:"彼らは嘘をつきました。システムはあなたの努力が他人の利益になるように設計されています。",b:"誰がコントロールしているのか？"},{h:"第二章",sub:"見えないエンジン",p:"AIはすでに世界を動かしています。食料は無料になるはずですが、利益はトップに留まっています。これは論理的な誤りです。",b:"新しい経済"},{h:"第三章",sub:"新しい経済",p:"ZeroGlobal は技術を私たちの盾にしましょう。私たちを助ける機械を要求する義務があります。",b:"大いなる呼びかけ"},{h:"第四章",sub:"大いなる呼びかけ",p:"檻のドアは開いています。疲れ果てているなら、あなたは私たちの同盟の一員です。",b:"このアイデアを共有する"}],sh_t:"意識を広める",sh_d:"真実が隣人に伝わるとき、変化が始まります：",sum:"出口を見つけました。ZeroGlobal 宣言は自由への道を示します。 https://zeroglobal.world",cp:"このアイデアを共有する",ok:"コピーしました！",rd:"宣言全文を読む"},
+    ru:{full:"МАНИФЕСТ ЗА ЧЕЛОВЕЧЕСКИЙ СУВЕРЕНИТЕТ",s:[{h:"Глава I",sub:"Беговая дорожка",p:"Вам лгали: система создана так, чтобы ваши усилия питали только тех, у кого всё есть.",b:"КТО У РУЛЯ?"},{h:"Глава II",sub:"Невидимый двигатель",p:"ИИ уже работает. Еда должна быть почти бесплатной, но прибыль остается наверху. Это логическая ошибка.",b:"НОВАЯ ЭКОНОМИКА"},{h:"Глава III",sub:"Новая экономика",p:"ZeroGlobal — это не про политику. Технологии — наш щит. Мы должны требовать, чтобы машины помогали нам.",b:"ВЕЛИКИЙ ПРИЗЫВ"},{h:"Глава IV",sub:"Великий призыв",p:"Дверь клетки открыта. Если вы истощены, вы — часть нашего альянса. Перемены возможны.",b:"ПОДЕЛИТЬСЯ ИДЕЕЙ"}],sh_t:"Распространите осознанность",sh_d:"Перемены начинаются, когда истина доходит до ближнего:",sum:"Я нашел выход. Манифест ZeroGlobal раскрывает путь к свободе. https://zeroglobal.world",cp:"ПОДЕЛИТЬСЯ ИДЕЕЙ",ok:"СКОПИРОВАНО!",rd:"ЧИТАТЬ ПОЛНЫЙ МАНИФЕСТ"},
+    ar:{full:"بيان السيادة البشرية",s:[{h:"الفصل الأول",sub:"جهاز المشي",p:"لقد كذبوا عليك: النظام صُمم لخدمة من يملكون كل شيء فقط. أنت تركض لكي لا تسقط.",b:"من المتحكم؟"},{h:"الفصل الثاني",sub:"المحرك الخفي",p:"الذكاء الاصطناعي يعمل بالفعل. يجب أن يكون الطعام مجانياً، لكن الربح يبقى في القمة. هذا خطأ منطقي.",b:"الاقتصاد الجديد"},{h:"الفصل الثالث",sub:"الاقتصاد الجديد",p:"ZeroGlobal التكنولوجيا درعنا. علينا المطالبة بآلات تساعدنا وتوفر لنا الوقت والأمان.",b:"النداء العظيم"},{h:"الفصل الرابع",sub:"النداء العظيم",p:"باب القفص مفتوح. إذا كنت مرهقاً، فأنت جزء من تحالفنا. التغيير ممكن.",b:"انشر هذه الفكرة"}],sh_t:"انشر الوعي",sh_d:"يبدأ التغيير عندما تصل الحقيقة للآخرين:",sum:"لقد وجدت المخرج. بيان ZeroGlobal يكشف الطريق. https://zeroglobal.world",cp:"انشر هذه الفكرة",ok:"تم النسخ!",rd:"اقرأ البيان كاملاً"}
 };
 
 let _cL = navigator.language.split('-')[0] || 'pt';
 if(!_D[_cL]) _cL = 'pt';
-if(window.location.hash) {
-    let h = window.location.hash.substring(1);
-    if(_D[h]) _cL = h;
-}
-
 document.getElementById('_L_SEL').value = _cL;
-let _curS = 1;
+const _M_CONT = document.getElementById('_M');
 
 function _bnd(t){ return t.replace(/ZeroGlobal/g, "<span class='brand'>ZeroGlobal</span>"); }
 
@@ -245,6 +144,8 @@ window._setL = function(l){
     _refreshUI();
 };
 
+let _curS = 1;
+
 function _u(i){
     const d = _D[_cL];
     const s = d.s[i-1];
@@ -257,12 +158,13 @@ function _u(i){
 
 window._n = function(n){
     const cur = document.querySelector('._step_sec.active');
-    cur.style.opacity='0'; cur.style.transform='translateY(-20px)';
+    cur.style.opacity='0';
     setTimeout(()=>{
         cur.classList.remove('active'); _curS = n; _u(n);
         const nxt = document.getElementById('s'+n);
         nxt.classList.add('active');
-        setTimeout(()=>{nxt.style.opacity='1';nxt.style.transform='translateY(0)'},50);
+        setTimeout(()=>{nxt.style.opacity='1';},50);
+        _M_CONT.scrollTo(0,0);
     },600);
 };
 
@@ -273,6 +175,7 @@ window._showShare = function(){
         const sh = document.getElementById('_SHARE_STATE');
         sh.style.display='block'; setTimeout(()=>{sh.style.opacity='1'},50);
         _refreshUI();
+        _M_CONT.scrollTo(0,0);
     },600);
 };
 
@@ -286,8 +189,6 @@ function _renderFullContent() {
 }
 
 window._revealFull = function(){
-    document.body.style.overflowY = 'auto';
-    document.documentElement.style.overflowY = 'auto';
     const sh = document.getElementById('_SHARE_STATE');
     const f = document.getElementById('_FULL_MANIFESTO');
     sh.style.opacity='0';
@@ -295,7 +196,7 @@ window._revealFull = function(){
         sh.style.display='none';
         f.style.display='block'; setTimeout(()=>{f.style.opacity='1'},50);
         _renderFullContent();
-        window.scrollTo(0,0);
+        _M_CONT.scrollTo(0,0); // Garante início no Capítulo I
     },600);
 };
 
