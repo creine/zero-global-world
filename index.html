@@ -24,6 +24,7 @@
             font-size: 1.2rem;
             text-shadow: 0 0 8px #00ff41;
             margin-bottom: 5px;
+            white-space: pre-wrap;
         }
         #claim-btn {
             position: absolute;
@@ -44,6 +45,10 @@
             color: #000;
             box-shadow: 0 0 20px #00ff41;
         }
+        .loading {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -51,26 +56,25 @@
 <div id="ui-overlay">
     <div class="matrix-text" id="status-line">> [ AETHER_STATUS: INITIALIZING... ]</div>
     <div class="matrix-text" id="lang-line">> [ LOCATING_NODE... ]</div>
+    <div class="matrix-text" id="msg-line"></div>
 </div>
 
 <button id="claim-btn">CLAIM YOUR TIME</button>
 
 <script>
-    // 1. Traduções das Top 10 Línguas + Gatilhos de Impacto
     const content = {
-        en: { status: "DEBT_VOID", action: "CLAIM YOUR TIME", fall: ["DEBT", "WAR", "FEAR", "SCARCITY", "CONTROL", "INTEREST"] },
-        pt: { status: "DIVIDA_ZERO", action: "REIVINDIQUE SEU TEMPO", fall: ["DÍVIDA", "GUERRA", "MEDO", "ESCASSEZ", "CONTROLE", "JUROS"] },
-        es: { status: "DEUDA_CERO", action: "RECLAMA TU TIEMPO", fall: ["DEUDA", "GUERRA", "MIEDO", "ESCASEZ", "CONTROL", "INTERÉS"] },
-        fr: { status: "DETTE_NULLE", action: "RÉCLAMEZ VOTRE TEMPS", fall: ["DETTE", "GUERRE", "PEUR", "RARETÉ", "CONTRÔLE", "INTÉRÊT"] },
-        zh: { status: "债务归零", action: "夺回你的时间", fall: ["债务", "战争", "恐惧", "匮乏", "控制", "利息"] },
-        ru: { status: "ДОЛГ_АННУЛИРОВАН", action: "ЗАБЕРИ СВОЕ ВРЕМЯ", fall: ["ДОЛГ", "ВОЙНА", "СТРАХ", "ДЕФИЦИТ", "КОНТРОЛЬ", "ПРОЦЕНТЫ"] },
-        ar: { status: "الديون_صفر", action: "استرد وقتك", fall: ["ديون", "حرب", "خوف", "نقص", "سيطرة", "فائدة"] },
-        hi: { status: "कर्ज_शून्य", action: "अपना समय लें", fall: ["कर्ज", "युद्ध", "डर", "कमी", "नियंत्रण", "ब्याज"] },
-        de: { status: "SCHULDEN_FREI", action: "HOL DIR DEINE ZEIT", fall: ["SCHULDEN", "KRIEG", "ANGST", "MANGEL", "KONTROLLE", "ZINSEN"] },
-        ja: { status: "負債ゼロ", action: "時間を取り戻せ", fall: ["負債", "戦争", "恐怖", "不足", "支配", "利息"] }
+        en: { status: "DEBT_VOID", action: "CLAIM YOUR TIME", wait: "> ANALYZING INTENT... PLEASE WAIT FOR THE NEW MODEL.", fall: ["DEBT", "WAR", "FEAR", "SCARCITY", "CONTROL", "INTEREST"] },
+        pt: { status: "DIVIDA_ZERO", action: "REIVINDIQUE SEU TEMPO", wait: "> ANALISANDO INTENÇÃO... AGUARDE O NOVO MODELO.", fall: ["DÍVIDA", "GUERRA", "MEDO", "ESCASSEZ", "CONTROLE", "JUROS"] },
+        es: { status: "DEUDA_CERO", action: "RECLAMA TU TIEMPO", wait: "> ANALIZANDO INTENCIÓN... ESPERA EL NUEVO MODELO.", fall: ["DEUDA", "GUERRA", "MIEDO", "ESCASEZ", "CONTROL", "INTERÉS"] },
+        fr: { status: "DETTE_NULLE", action: "RÉCLAMEZ VOTRE TEMPS", wait: "> ANALYSE EN COURS... ATTENDEZ LE NOUVEAU MODÈLE.", fall: ["DETTE", "GUERRE", "PEUR", "RARETÉ", "CONTRÔLE", "INTÉRÊT"] },
+        zh: { status: "债务归零", action: "夺回你的时间", wait: "> 正在分析意图... 请等待新模型。", fall: ["债务", "战争", "恐惧", "匮乏", "控制", "利息"] },
+        ru: { status: "ДОЛГ_АННУЛИРОВАН", action: "ЗАБЕРИ СВОЕ ВРЕМЯ", wait: "> АНАЛИЗ НАМЕРЕНИЙ... ЖДИТЕ НОВУЮ МОДЕЛЬ.", fall: ["ДОЛГ", "ВОЙНА", "СТРАХ", "ДЕФИЦИТ", "КОНТРОЛЬ", "ПРОЦЕНТЫ"] },
+        ar: { status: "الديون_صفر", action: "استرد وقتك", wait: "> جاري تحليل النية... يرجى انتظار النموذج الجديد.", fall: ["ديون", "حرب", "خوف", "نقص", "سيطرة", "فائدة"] },
+        hi: { status: "कर्ज_शून्य", action: "अपना समय लें", wait: "> इरादे का विश्लेषण... नए मॉडल की प्रतीक्षा करें।", fall: ["कर्ज", "युद्ध", "डर", "कमी", "नियंत्रण", "ब्याज"] },
+        de: { status: "SCHULDEN_FREI", action: "HOL DIR DEINE ZEIT", wait: "> INTENTION WIRD ANALYSIERT... AUF NEUES MODELL WARTEN.", fall: ["SCHULDEN", "KRIEG", "ANGST", "MANGEL", "KONTROLLE", "ZINSEN"] },
+        ja: { status: "負債ゼロ", action: "時間を取り戻せ", wait: "> 意図を分析中... 新しいモデルを待機してください。", fall: ["負債", "战争", "恐怖", "不足", "支配", "利息"] }
     };
 
-    // Detecção de Língua
     const userLang = navigator.language.split('-')[0] || 'en';
     const langData = content[userLang] || content.en;
 
@@ -78,63 +82,46 @@
     document.getElementById('lang-line').innerText = `> [ NODE_LOCKED: ${userLang.toUpperCase()} ]`;
     document.getElementById('claim-btn').innerText = langData.action;
 
-    // 2. Lógica de Gravidade (Matter.js)
     const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint } = Matter;
-
     const engine = Engine.create();
     const render = Render.create({
         element: document.body,
         engine: engine,
-        options: {
-            width: window.innerWidth,
-            height: window.innerHeight,
-            wireframes: false,
-            background: 'transparent'
-        }
+        options: { width: window.innerWidth, height: window.innerHeight, wireframes: false, background: 'transparent' }
     });
 
-    // Paredes Invisíveis
     const ground = Bodies.rectangle(window.innerWidth/2, window.innerHeight + 25, window.innerWidth, 50, { isStatic: true });
     const wallL = Bodies.rectangle(-25, window.innerHeight/2, 50, window.innerHeight, { isStatic: true });
     const wallR = Bodies.rectangle(window.innerWidth + 25, window.innerHeight/2, 50, window.innerHeight, { isStatic: true });
     Composite.add(engine.world, [ground, wallL, wallR]);
 
-    // Criar blocos de palavras que caem
     function spawnWord(text) {
         const x = Math.random() * window.innerWidth;
-        const box = Bodies.rectangle(x, -50, text.length * 15, 40, {
-            render: {
-                sprite: {
-                    // Aqui geramos um canvas dinâmico para cada palavra
-                    texture: createTextTexture(text)
-                }
-            },
-            restitution: 0.5,
-            friction: 0.1
+        const box = Bodies.rectangle(x, -50, text.length * 20, 45, {
+            render: { sprite: { texture: createTextTexture(text) } },
+            restitution: 0.5, friction: 0.1
         });
         Composite.add(engine.world, box);
     }
 
     function createTextTexture(text) {
         const canvas = document.createElement('canvas');
-        canvas.width = text.length * 20;
-        canvas.height = 50;
+        canvas.width = text.length * 25;
+        canvas.height = 60;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = 'bold 20px Courier New';
+        ctx.font = 'bold 24px Courier New';
         ctx.fillStyle = '#00ff41';
         ctx.textAlign = 'center';
-        ctx.fillText(text, canvas.width / 2, 35);
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur = 10;
+        ctx.fillText(text, canvas.width / 2, 40);
         return canvas.toDataURL();
     }
 
-    // Spawn inicial
     langData.fall.forEach((word, index) => {
-        setTimeout(() => spawnWord(word), index * 500);
+        setTimeout(() => spawnWord(word), index * 400);
     });
 
-    // Interatividade com o Mouse
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
@@ -143,14 +130,25 @@
     Composite.add(engine.world, mouseConstraint);
 
     Render.run(render);
-    const runner = Runner.create();
-    Runner.run(runner, engine);
+    Runner.run(Runner.create(), engine);
 
-    // Redirecionamento (O Manifesto virá aqui)
-    document.getElementById('claim-btn').addEventListener('click', () => {
-        alert("The Protocol is analyzing your intent. Stand by for the Manifesto.");
+    // Nova Ação do Botão: Integração no Terminal
+    document.getElementById('claim-btn').addEventListener('click', function() {
+        this.style.display = 'none'; // Esconde o botão
+        const msgLine = document.getElementById('msg-line');
+        msgLine.classList.add('loading');
+        
+        let i = 0;
+        const speed = 50;
+        function typeWriter() {
+            if (i < langData.wait.length) {
+                msgLine.innerHTML += langData.wait.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        typeWriter();
     });
 </script>
-
 </body>
 </html>
