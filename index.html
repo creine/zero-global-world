@@ -9,6 +9,12 @@
 :root{--bg-dark:#000;--bg-light:#fff;--text-main:#f4f4f5;--text-charcoal:#1a1a1a;--accent-cyan:#06b6d4;--grad-tech:linear-gradient(135deg,#3b82f6,#06b6d4);--grad-hope:linear-gradient(45deg,#2ecc71,#3498db);--hl-surge:linear-gradient(45deg,#ff3333,#ff0000);--brand-grad:linear-gradient(135deg,#06b6d4,#3b82f6)}
 *{margin:0;padding:0;box-sizing:border-box;outline:0}
 body{background:var(--bg-dark);color:var(--text-main);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased;transition:background 1.5s cubic-bezier(0.4,0,0.2,1),color 1.5s ease}
+
+/* UI Idiomas */
+#_LANG_UI{position:fixed;top:25px;right:25px;z-index:3000;opacity:0;transition:opacity 1s ease}
+#_L_SEL{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:8px 15px;border-radius:30px;font-size:12px;font-weight:700;cursor:pointer;backdrop-filter:blur(10px);text-transform:uppercase;outline:none}
+#_L_SEL option{background:#1a1a1a;color:#fff}
+
 #_L{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;z-index:2000;background:var(--bg-dark);color:#444;font-size:12px;letter-spacing:4px;font-weight:300;transition:opacity .8s ease}
 #_BG{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center,#0a0a0a 0,#000 100%);z-index:1;animation:bP 8s ease-in-out infinite}
 @keyframes bP{0%,100%{opacity:.6}50%{opacity:1}}
@@ -19,21 +25,38 @@ h1{font-size:3.4rem;font-weight:300;letter-spacing:-1.5px;margin:0;max-width:110
 h1 span.hl{font-weight:600;background:var(--grad-hope);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;opacity:0}
 h1 span.brand{font-weight:800;background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-3px}
 h1 ._lf{color:#ff4444;text-shadow:0 0 20px rgba(255,0,0,0.2);display:inline-block;opacity:0}
+
 @keyframes _lfA{0%{transform:translateY(15px);opacity:0;filter:blur(10px)}100%{transform:translateY(0);opacity:1;filter:blur(0)}}
 @keyframes _eC{0%{transform:scale(1.02);opacity:0;filter:blur(8px)}100%{transform:scale(1);opacity:1;filter:blur(0)}}
 @keyframes _fS{0%{transform:scale(1);opacity:1}100%{transform:scale(1.08);background:var(--hl-surge);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;opacity:1}}
 @keyframes gO{0%{opacity:1;filter:blur(0)}100%{opacity:0;filter:blur(30px);transform:scale(1.03)}}
 .h1_out{animation:gO 0.9s ease-in forwards!important}
+
 #_CTA{opacity:0;transition:opacity 1.5s ease, transform 1.5s ease;margin-top:80px;display:flex;flex-direction:column;align-items:center;transform:translateY(30px)}
 #_CTA.show{opacity:1;transform:translateY(0)}
 a.b{display:inline-block;padding:26px 70px;background:var(--text-charcoal);color:#fff;text-decoration:none;border-radius:100px;transition:all .5s cubic-bezier(0.19,1,0.22,1);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:1rem;box-shadow:0 20px 40px rgba(0,0,0,0.2)}
 a.b:hover{transform:translateY(-5px);box-shadow:0 30px 60px rgba(0,0,0,0.25)}
 #_SUB{margin-top:40px;font-size:1.3rem;color:var(--text-charcoal);max-width:700px;line-height:1.6;font-weight:600;letter-spacing:-0.2px;opacity:0.9}
 #_SUB b{background:var(--brand-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+
 @media (max-width:768px){h1{font-size:2.4rem;line-height:1.5}#_X{padding:0 20px}a.b{width:100%;padding:22px 30px}#_SUB{font-size:1.1rem}}
 </style>
 </head>
 <body>
+<div id="_LANG_UI">
+    <select id="_L_SEL" onchange="_setL(this.value)">
+        <option value="pt">Português</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="zh">中文</option>
+        <option value="jp">日本語</option>
+        <option value="ru">Русский</option>
+        <option value="ar">العربية</option>
+    </select>
+</div>
 <div id="_L"></div>
 <div id="_BG"></div>
 <canvas id="_C"></canvas>
@@ -45,13 +68,24 @@ a.b:hover{transform:translateY(-5px);box-shadow:0 30px 60px rgba(0,0,0,0.25)}
     <p id="_SUB"></p>
   </div>
 </div>
+
 <script>
 (function(){
 const _D={
+  pt:{
+    t:"ZEROGLOBAL.WORLD", d:"O futuro está além da sobrevivência.", l:"BEM VINDO AO FUTURO...",
+    m:[
+      "Você vive no <span class='hl'>modo sobrevivência...</span><br><br>Vendendo suas horas vitais para pagar por uma vida <span class='hl'>que não te pertence...</span>",
+      "Fizeram você acreditar que essa <br><span class='hl'>corrida de ratos</span> é o seu destino....<br><br>É uma <span class='_lf'>mentira do sistema!</span>",
+      "A Inteligência Artificial não nasceu <br> para te <span class='hl'>substituir...</span><br><br>Ela nasceu para <span class='hl'>devolver sua liberdade!</span>",
+      "O <span class='brand'>ZEROGLOBAL</span> é a nossa rota de fuga!<br><br>Uma aliança onde a tecnologia trabalha <span class='hl'>por você</span>.",
+      "O tempo é o seu único ativo real.<br><br><span class='hl'>O que você fará quando ele for seu de novo?</span>"
+    ],
+    b:"SAIR DO MODO SOBREVIVÊNCIA",
+    s:"O futuro está muito além do que nos contaram.<br><b>Você pode participar desta evolução desde o início.</b>"
+  },
   en:{
-    t:"ZEROGLOBAL.WORLD",
-    d:"The future is beyond survival.",
-    l:"WELCOME TO THE FUTURE...",
+    t:"ZEROGLOBAL.WORLD", d:"The future is beyond survival.", l:"WELCOME TO THE FUTURE...",
     m:[
       "You are living in <span class='hl'>survival mode...</span><br><br>Selling your vital hours to pay for a life <span class='hl'>that isn't yours...</span>",
       "They made you believe this <br><span class='hl'>rat race</span> is your destiny....<br><br>It is a <span class='_lf'>system lie!</span>",
@@ -62,27 +96,130 @@ const _D={
     b:"EXIT SURVIVAL MODE",
     s:"The future is far beyond what they told us.<br><b>You can be part of this evolution from the very beginning.</b>"
   },
-  pt:{
-    t:"ZEROGLOBAL.WORLD",
-    d:"O futuro está além da sobrevivência.",
-    l:"BEM VINDO AO FUTURO...",
+  es:{
+    t:"ZEROGLOBAL.WORLD", d:"El futuro está más allá de la supervivencia.", l:"BIENVENIDO AL FUTURO...",
     m:[
-      "Você vive no <span class='hl'>modo sobrevivência...</span><br><br>Vendendo suas horas vitais para pagar por uma vida <span class='hl'>que não te pertence...</span>",
-      "Fizeram você acreditar que essa <br><span class='hl'>corrida de ratos</span> é o seu destino....<br><br>É uma <span class='_lf'>mentira do sistema!</span>",
-      "A Inteligência Artificial não nasceu <br> para te <span class='hl'>substituir...</span><br><br>Ela nasceu para <span class='hl'>devolver sua liberdade!</span>",
-      "O <span class='brand'>ZEROGLOBAL</span> é a nossa rota de fuga!<br><br>Uma aliança onde a tecnologia trabalha <span class='hl'>por você</span>.",
-      "O tempo é o seu único ativo real.<br><br><span class='hl'>O que você fará quando ele for seu de novo?</span>"
+      "Vives en <span class='hl'>modo supervivencia...</span><br><br>Vendiendo tus horas vitales para pagar una vida <span class='hl'>que no te pertenece...</span>",
+      "Te hicieron creer que esta <br><span class='hl'>carrera de ratas</span> es tu destino....<br><br>¡Es una <span class='_lf'>mentira del sistema!</span>",
+      "La Inteligencia Artificial no nació <br> para <span class='hl'>reemplazarte...</span><br><br>¡Nació para <span class='hl'>devolverte tu libertad!</span>",
+      "El <span class='brand'>ZEROGLOBAL</span> es nuestra ruta de escape!<br><br>Una alianza donde la tecnología trabaja <span class='hl'>por ti</span>.",
+      "El tiempo es tu único activo real.<br><br><span class='hl'>¿Qué harás cuando sea tuyo de nuevo?</span>"
     ],
-    b:"SAIR DO MODO SOBREVIVÊNCIA",
-    s:"O futuro está muito além do que nos contaram.<br><b>Você pode participar desta evolução desde o início.</b>"
+    b:"SALIR DEL MODO SUPERVIVENCIA",
+    s:"El futuro está mucho más allá de lo que nos contaron.<br><b>Puedes ser parte de esta evolución desde el principio.</b>"
+  },
+  fr:{
+    t:"ZEROGLOBAL.WORLD", d:"L'avenir est au-delà de la survie.", l:"BIENVENUE DANS LE FUTUR...",
+    m:[
+      "Vous vivez en <span class='hl'>mode survie...</span><br><br>Vendant vos heures vitales pour payer une vie <span class='hl'>qui ne vous appartient pas...</span>",
+      "Ils vous ont fait croire que cette <br><span class='hl'>course effrénée</span> est votre destin....<br><br>C'est un <span class='_lf'>mensonge du système !</span>",
+      "L'Intelligence Artificielle n'est pas née <br> pour vous <span class='hl'>remplacer...</span><br><br>Elle est née pour <span class='hl'>vous rendre votre liberté !</span>",
+      "Le <span class='brand'>ZEROGLOBAL</span> est notre voie de sortie !<br><br>Une alliance où la technologie travaille <span class='hl'>pour vous</span>.",
+      "Le temps est votre seul véritable atout.<br><br><span class='hl'>Que ferez-vous quand il sera de nouveau à vous ?</span>"
+    ],
+    b:"QUITTER LE MODE SURVIE",
+    s:"L'avenir est bien au-delà de ce qu'on nous a dit.<br><b>Vous pouvez faire partie de cette évolution dès le début.</b>"
+  },
+  de:{
+    t:"ZEROGLOBAL.WORLD", d:"Die Zukunft liegt jenseits des Überlebens.", l:"WILLKOMMEN IN DER ZUKUNFT...",
+    m:[
+      "Du lebst im <span class='hl'>Überlebensmodus...</span><br><br>Du verkaufst deine Lebenszeit, um für ein Leben zu bezahlen, <span class='hl'>das dir nicht gehört...</span>",
+      "Man hat dich glauben lassen, dass dieses <br><span class='hl'>Hamsterrad</span> dein Schicksal ist....<br><br>Es ist eine <span class='_lf'>Systemlüge!</span>",
+      "Künstliche Intelligenz wurde nicht geboren, <br> um dich zu <span class='hl'>ersetzen...</span><br><br>Sie wurde geboren, um dir <span class='hl'>deine Freiheit zurückzugeben!</span>",
+      "Das <span class='brand'>ZEROGLOBAL</span> ist unser Fluchtweg!<br><br>Eine Allianz, in der Technologie <span class='hl'>für dich</span> arbeitet.",
+      "Zeit ist dein einziges wahres Kapital.<br><br><span class='hl'>Was wirst du tun, wenn sie wieder dir gehört?</span>"
+    ],
+    b:"ÜBERLEBENSMODUS VERLASSEN",
+    s:"Die Zukunft liegt weit jenseits dessen, was man uns erzählt hat.<br><b>Du kannst von Anfang an Teil dieser Entwicklung sein.</b>"
+  },
+  it:{
+    t:"ZEROGLOBAL.WORLD", d:"Il futuro è oltre la sopravvivenza.", l:"BENVENUTI NEL FUTURO...",
+    m:[
+      "Vivi in <span class='hl'>modalità sopravvivenza...</span><br><br>Vendendo le tue ore vitali per pagare una vita <span class='hl'>che non ti appartiene...</span>",
+      "Ti hanno fatto credere che questa <br><span class='hl'>corsa dei topi</span> sia il tuo destino....<br><br>È una <span class='_lf'>menzogna del sistema!</span>",
+      "L'Intelligenza Artificiale non è nata <br> per <span class='hl'>sostituirti...</span><br><br>È nata per <span class='hl'>restituirti la tua libertà!</span>",
+      "Lo <span class='brand'>ZEROGLOBAL</span> è la nostra via di fuga!<br><br>Un'alleanza dove la tecnologia lavora <span class='hl'>per te</span>.",
+      "Il tempo è il tuo unico vero bene.<br><br><span class='hl'>Cosa farai quando sarà di nuovo tuo?</span>"
+    ],
+    b:"ESCI DALLA MODALITÀ SOPRAVVIVENZA",
+    s:"Il futuro è molto oltre ciò che ci hanno raccontato.<br><b>Puoi far parte di questa evoluzione fin dall'inizio.</b>"
+  },
+  zh:{
+    t:"ZEROGLOBAL.WORLD", d:"未来超越生存。", l:"欢迎来到未来……",
+    m:[
+      "你生活在 <span class='hl'>生存模式中……</span><br><br>出卖你的宝贵时间来支付 <span class='hl'>不属于你的生活……</span>",
+      "他们让你相信 <br><span class='hl'>鼠辈竞争</span> 是你的命运……<br><br>这是一个 <span class='_lf'>系统的谎言！</span>",
+      "人工智能的诞生不是为了 <br> <span class='hl'>取代你……</span><br><br>它的诞生是为了 <span class='hl'>还你自由！</span>",
+      "<span class='brand'>ZEROGLOBAL</span> 是我们的逃生路线！<br><br>一个技术 <span class='hl'>为你</span> 工作的联盟。",
+      "时间是你唯一真实的资产。<br><br><span class='hl'>当它再次属于你时，你会做什么？</span>"
+    ],
+    b:"退出生存模式",
+    s:"未来远超他们告诉我们的。<br><b>你可以从一开始就参与这次进化。</b>"
+  },
+  jp:{
+    t:"ZEROGLOBAL.WORLD", d:"未来は生存の先にある。", l:"未来へようこそ……",
+    m:[
+      "あなたは <span class='hl'>生存モード</span> で生きています……<br><br><span class='hl'>自分のものではない人生</span> のために、貴重な時間を切り売りしています……",
+      "この <br><span class='hl'>ラットレース</span> があなたの運命だと信じ込まされました……<br><br>それは <span class='_lf'>システムの嘘</span> です！",
+      "人工知能はあなたを <br> <span class='hl'>置き換える</span> ために生まれたのではありません……<br><br>あなたの <span class='hl'>自由を取り戻す</span> ために生まれたのです！",
+      "<span class='brand'>ZEROGLOBAL</span> は私たちの脱出ルートです！<br><br>テクノロジーが <span class='hl'>あなたのために</span> 働く同盟です。",
+      "時間はあなたの唯一の真の資産です。<br><br><span class='hl'>それが再びあなたのものになったとき、あなたは何をしますか？</span>"
+    ],
+    b:"生存モードを終了する",
+    s:"未来は私たちが聞かされていたものを遥かに超えています。<br><b>あなたも最初からこの進化に参加できます。</b>"
+  },
+  ru:{
+    t:"ZEROGLOBAL.WORLD", d:"Будущее за пределами выживания.", l:"ДОБРО ПОЖАЛОВАТЬ В БУДУЩЕЕ...",
+    m:[
+      "Вы живете в <span class='hl'>режиме выживания...</span><br><br>Продавая свои жизненные часы, чтобы оплатить жизнь, <span class='hl'>которая вам не принадлежит...</span>",
+      "Они заставили вас поверить, что эта <br><span class='hl'>крысиная бега</span> — ваша судьба....<br><br>Это <span class='_lf'>ложь системы!</span>",
+      "Искусственный Интеллект родился не для того, <br> чтобы <span class='hl'>заменить вас...</span><br><br>Он родился, чтобы <span class='hl'>вернуть вам свободу!</span>",
+      "<span class='brand'>ZEROGLOBAL</span> — это наш путь к спасению!<br><br>Альянс, где технологии работают <span class='hl'>на вас</span>.",
+      "Время — ваш единственный реальный актив.<br><br><span class='hl'>Что вы сделаете, когда оно снова станет вашим?</span>"
+    ],
+    b:"ВЫЙТИ ИЗ РЕЖИМА ВЫЖИВАНИЯ",
+    s:"Будущее гораздо шире того, что нам рассказывали.<br><b>Вы можете стать частью этой эволюции с самого начала.</b>"
+  },
+  ar:{
+    t:"ZEROGLOBAL.WORLD", d:"المستقبل وراء البقاء.", l:"مرحباً بك في المستقبل...",
+    m:[
+      "أنت تعيش في <span class='hl'>وضع البقاء...</span><br><br>تبيع ساعاتك الحيوية لتدفع ثمن حياة <span class='hl'>لا تخصك...</span>",
+      "لقد جعلوك تعتقد أن <br><span class='hl'>سباق الفئران</span> هذا هو قدرك....<br><br>إنها <span class='_lf'>كذبة النظام!</span>",
+      "الذكاء الاصطناعي لم يولد <br> لكي <span class='hl'>يستبدلك...</span><br><br>لقد ولد لكي <span class='hl'>يعيد لك حريتك!</span>",
+      "<span class='brand'>ZEROGLOBAL</span> هو طريق هروبنا!<br><br>تحالف حيث تعمل التكنولوجيا <span class='hl'>من أجلك</span>.",
+      "الوقت هو أصلك الحقيقي الوحيد.<br><br><span class='hl'>ماذا ستفعل عندما يصبح لك مرة أخرى؟</span>"
+    ],
+    b:"الخروج من وضع البقاء",
+    s:"المستقبل أبعد بكثير مما أخبرونا به.<br><b>يمكنك أن تكون جزءاً من هذا التطور منذ البداية.</b>"
   }
 };
-const _L=document.getElementById('_L'),_X=document.getElementById('_X'),_P=document.getElementById('_P'),_T=document.getElementById('_T'),_B=document.getElementById('_B'),_CAN=document.getElementById('_C'),_BG=document.getElementById('_BG'),_CTA=document.getElementById('_CTA'),_SUB=document.getElementById('_SUB');
+
+const _L=document.getElementById('_L'),_X=document.getElementById('_X'),_P=document.getElementById('_P'),_T=document.getElementById('_T'),_B=document.getElementById('_B'),_CAN=document.getElementById('_C'),_BG=document.getElementById('_BG'),_CTA=document.getElementById('_CTA'),_SUB=document.getElementById('_SUB'),_LUI=document.getElementById('_LANG_UI'),_LSEL=document.getElementById('_L_SEL');
+
 let _s=0,_M={x:-1000,y:-1000};
-const _LN=navigator.language.split('-')[0]||'en',_C=_D[_LN]||_D.en;
+let _LN=navigator.language.split('-')[0]||'en';
+if(!_D[_LN]) _LN = 'en';
+let _C=_D[_LN];
+_LSEL.value = _LN;
+
+// Função para mudar idioma (recarrega para reiniciar sequência)
+window._setL = function(l){
+    window.location.hash = l;
+    location.reload();
+};
+
+// Se houver hash na URL, prioriza o hash
+if(window.location.hash) {
+    let h = window.location.hash.substring(1);
+    if(_D[h]) { _LN = h; _C = _D[h]; _LSEL.value = h; }
+}
+
 _L.innerText=_C.l;
+
 const _it=setInterval(()=>{_s+=25;if(_s>=100){clearInterval(_it);_L.style.opacity='0';setTimeout(_iP,600);setTimeout(_run,800)}},300);
+
 window.addEventListener('mousemove',e=>{_M.x=e.clientX;_M.y=e.clientY});
+
 function _iP(){
     const c=_CAN.getContext('2d');_CAN.width=window.innerWidth;_CAN.height=window.innerHeight;_CAN.style.opacity='0.4';
     let p=[];const n=35;
@@ -100,9 +237,14 @@ function _iP(){
         }requestAnimationFrame(d);
     }d();
 }
+
 function _run(){
-  _L.style.display='none';_X.style.opacity='1';_P.style.opacity='1';
+  _L.style.display='none';_X.style.opacity='1';_P.style.opacity='1';_LUI.style.opacity='1';
   _B.innerText=_C.b;_SUB.innerHTML=_C.s;
+  
+  // RTL para Árabe
+  if(_LN === 'ar') { _X.dir = 'rtl'; } else { _X.dir = 'ltr'; }
+
   let _i=0;
   function _nxt(){
     if(_i<_C.m.length){
@@ -115,12 +257,15 @@ function _run(){
         _T.innerHTML=_C.m[_i];_T.style.opacity='1';
         let _lf=_T.querySelector('._lf');if(_lf){setTimeout(()=>{_lf.style.animation='_lfA 0.7s ease-out forwards'},400)}
         let _hls=_T.querySelectorAll('.hl, .brand');if(_hls.length>0){_hls.forEach((h,idx)=>{setTimeout(()=>{h.style.animation='_eC 0.9s ease-out forwards'},idx*200)})}
+        
         if(_i===_C.m.length-1){
           setTimeout(()=>{
             _P.style.opacity='0';_CAN.style.opacity='0';_BG.style.opacity='0';
             document.body.style.background='var(--bg-light)';
             document.body.style.color='var(--text-charcoal)';
             _T.style.color='var(--text-charcoal)';
+            _LUI.querySelector('#_L_SEL').style.color = '#1a1a1a';
+            _LUI.querySelector('#_L_SEL').style.borderColor = '#ddd';
             _CTA.classList.add('show');
           },_totalD-1000);
         } else {
