@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEROGLOBAL.WORLD | AETHER PROTOCOL</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #000;
+            color: #00ff41;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 20px; left: 20px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .matrix-text {
+            font-size: 1.2rem;
+            text-shadow: 0 0 8px #00ff41;
+            margin-bottom: 5px;
+        }
+        #claim-btn {
+            position: absolute;
+            bottom: 50px; left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            font-family: inherit;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+        }
+        #claim-btn:hover {
+            background: #00ff41;
+            color: #000;
+            box-shadow: 0 0 20px #00ff41;
+        }
+    </style>
+</head>
+<body>
+
+<div id="ui-overlay">
+    <div class="matrix-text" id="status-line">> [ AETHER_STATUS: INITIALIZING... ]</div>
+    <div class="matrix-text" id="lang-line">> [ LOCATING_NODE... ]</div>
+</div>
+
+<button id="claim-btn">CLAIM YOUR TIME</button>
+
+<script>
+    // 1. Traduções das Top 10 Línguas + Gatilhos de Impacto
+    const content = {
+        en: { status: "DEBT_VOID", action: "CLAIM YOUR TIME", fall: ["DEBT", "WAR", "FEAR", "SCARCITY", "CONTROL", "INTEREST"] },
+        pt: { status: "DIVIDA_ZERO", action: "REIVINDIQUE SEU TEMPO", fall: ["DÍVIDA", "GUERRA", "MEDO", "ESCASSEZ", "CONTROLE", "JUROS"] },
+        es: { status: "DEUDA_CERO", action: "RECLAMA TU TIEMPO", fall: ["DEUDA", "GUERRA", "MIEDO", "ESCASEZ", "CONTROL", "INTERÉS"] },
+        fr: { status: "DETTE_NULLE", action: "RÉCLAMEZ VOTRE TEMPS", fall: ["DETTE", "GUERRE", "PEUR", "RARETÉ", "CONTRÔLE", "INTÉRÊT"] },
+        zh: { status: "债务归零", action: "夺回你的时间", fall: ["债务", "战争", "恐惧", "匮乏", "控制", "利息"] },
+        ru: { status: "ДОЛГ_АННУЛИРОВАН", action: "ЗАБЕРИ СВОЕ ВРЕМЯ", fall: ["ДОЛГ", "ВОЙНА", "СТРАХ", "ДЕФИЦИТ", "КОНТРОЛЬ", "ПРОЦЕНТЫ"] },
+        ar: { status: "الديون_صفر", action: "استرد وقتك", fall: ["ديون", "حرب", "خوف", "نقص", "سيطرة", "فائدة"] },
+        hi: { status: "कर्ज_शून्य", action: "अपना समय लें", fall: ["कर्ज", "युद्ध", "डर", "कमी", "नियंत्रण", "ब्याज"] },
+        de: { status: "SCHULDEN_FREI", action: "HOL DIR DEINE ZEIT", fall: ["SCHULDEN", "KRIEG", "ANGST", "MANGEL", "KONTROLLE", "ZINSEN"] },
+        ja: { status: "負債ゼロ", action: "時間を取り戻せ", fall: ["負債", "戦争", "恐怖", "不足", "支配", "利息"] }
+    };
+
+    // Detecção de Língua
+    const userLang = navigator.language.split('-')[0] || 'en';
+    const langData = content[userLang] || content.en;
+
+    document.getElementById('status-line').innerText = `> [ AETHER_STATUS: ${langData.status} ]`;
+    document.getElementById('lang-line').innerText = `> [ NODE_LOCKED: ${userLang.toUpperCase()} ]`;
+    document.getElementById('claim-btn').innerText = langData.action;
+
+    // 2. Lógica de Gravidade (Matter.js)
+    const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint } = Matter;
+
+    const engine = Engine.create();
+    const render = Render.create({
+        element: document.body,
+        engine: engine,
+        options: {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            wireframes: false,
+            background: 'transparent'
+        }
+    });
+
+    // Paredes Invisíveis
+    const ground = Bodies.rectangle(window.innerWidth/2, window.innerHeight + 25, window.innerWidth, 50, { isStatic: true });
+    const wallL = Bodies.rectangle(-25, window.innerHeight/2, 50, window.innerHeight, { isStatic: true });
+    const wallR = Bodies.rectangle(window.innerWidth + 25, window.innerHeight/2, 50, window.innerHeight, { isStatic: true });
+    Composite.add(engine.world, [ground, wallL, wallR]);
+
+    // Criar blocos de palavras que caem
+    function spawnWord(text) {
+        const x = Math.random() * window.innerWidth;
+        const box = Bodies.rectangle(x, -50, text.length * 15, 40, {
+            render: {
+                sprite: {
+                    // Aqui geramos um canvas dinâmico para cada palavra
+                    texture: createTextTexture(text)
+                }
+            },
+            restitution: 0.5,
+            friction: 0.1
+        });
+        Composite.add(engine.world, box);
+    }
+
+    function createTextTexture(text) {
+        const canvas = document.createElement('canvas');
+        canvas.width = text.length * 20;
+        canvas.height = 50;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = 'bold 20px Courier New';
+        ctx.fillStyle = '#00ff41';
+        ctx.textAlign = 'center';
+        ctx.fillText(text, canvas.width / 2, 35);
+        return canvas.toDataURL();
+    }
+
+    // Spawn inicial
+    langData.fall.forEach((word, index) => {
+        setTimeout(() => spawnWord(word), index * 500);
+    });
+
+    // Interatividade com o Mouse
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: { stiffness: 0.2, render: { visible: false } }
+    });
+    Composite.add(engine.world, mouseConstraint);
+
+    Render.run(render);
+    const runner = Runner.create();
+    Runner.run(runner, engine);
+
+    // Redirecionamento (O Manifesto virá aqui)
+    document.getElementById('claim-btn').addEventListener('click', () => {
+        alert("The Protocol is analyzing your intent. Stand by for the Manifesto.");
+    });
+</script>
+
+</body>
+</html>
