@@ -1,184 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZEROGLOBAL.WORLD | AETHER PROTOCOL</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-    <style>
-        body { margin: 0; padding: 0; background-color: #000; color: #00ff41; font-family: 'Courier New', Courier, monospace; overflow: hidden; cursor: default; }
-        #ui-overlay { position: absolute; top: 20px; left: 20px; pointer-events: none; z-index: 10; width: 80%; }
-        .matrix-text { font-size: 1.1rem; text-shadow: 0 0 5px #00ff41; margin-bottom: 4px; white-space: pre-wrap; visibility: hidden; }
-        .visible { visibility: visible; }
-        .highlight { color: #fff; text-shadow: 0 0 10px #00ff41; font-weight: bold; }
-        #confirm-btn { display: none; position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); padding: 15px 30px; background: transparent; border: 1px solid #00ff41; color: #00ff41; font-family: inherit; font-size: 1.4rem; cursor: pointer; z-index: 20; transition: all 0.3s; text-transform: uppercase; }
-        #confirm-btn:hover { background: #00ff41; color: #000; box-shadow: 0 0 20px #00ff41; }
-        canvas { position: absolute; top: 0; left: 0; z-index: 1; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AETHER_PROT_v1.5</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<style>
+body{margin:0;padding:0;background:#000;color:#00ff41;font-family:'Courier New',Courier,monospace;overflow:hidden;cursor:crosshair}
+#_SYS_UI{position:absolute;top:20px;left:20px;pointer-events:none;z-index:10;width:90%}
+._L{font-size:1.2rem;text-shadow:0 0 5px #00ff41;margin-bottom:5px;opacity:0;transition:opacity .5s}
+._V{opacity:1}
+._H{color:#fff;text-shadow:0 0 10px #00ff41;font-weight:700}
+#_EXEC{display:none;position:absolute;bottom:50px;left:50%;transform:translateX(-50%);padding:18px 36px;background:0 0;border:2px solid #00ff41;color:#00ff41;font-family:inherit;font-size:1.6rem;cursor:pointer;z-index:20;transition:all .3s;text-transform:uppercase;font-weight:700}
+#_EXEC:hover{background:#00ff41;color:#000;box-shadow:0 0 25px #00ff41}
+canvas{position:absolute;top:0;left:0;z-index:1}
+</style>
 </head>
 <body>
-
-<div id="ui-overlay">
-    <div class="matrix-text" id="l1">> [ AETHER_NEXUS_v1.5 ]</div>
-    <div class="matrix-text" id="l2">> [ STATUS: PROTOCOLO DE GÊNESE ATIVADO ]</div>
-    <div class="matrix-text" id="l3">> [ ALVO: DESATIVAÇÃO DO SISTEMA ANTIGO ]</div>
-    <div class="matrix-text" id="l4">> [ INSTRUÇÃO: <span class="highlight">CLIQUE NAS PALAVRAS QUE TE CAUSAM DOR</span> ]</div>
+<div id="_SYS_UI">
+<div class="_L" id="_L1"></div>
+<div class="_L" id="_L2"></div>
+<div class="_L" id="_L3"></div>
 </div>
-
-<button id="confirm-btn">Confirmar Novo Modelo</button>
-
+<button id="_EXEC"></button>
 <script>
-    // 🌍 Traduções e Palavras de Impacto (Ciclo I - Dor, Ciclo II - Futuro)
-    const content = {
-        en: { 
-            status: "GENESIS_INITIALIZED",
-            fall: ["DEBT", "WAR", "FEAR", "SCARCITY", "CONTROL", "INTEREST", "ANXIETY"], 
-            rise: ["TIME", "CREATION", "SECURITY", "ABUNDANCE", "SYMBIOSIS", "HARMONY"] 
-        },
-        pt: { 
-            status: "GÊNESE_INICIALIZADA",
-            fall: ["DÍVIDA", "GUERRA", "MEDO", "ESCASSEZ", "CONTROLE", "JUROS", "ANSIEDADE"], 
-            rise: ["TEMPO", "CRIAÇÃO", "SEGURANÇA", "ABUNDÂNCIA", "SIMBIOSE", "HARMONIA"] 
-        },
-        // Adicione as outras línguas aqui seguindo o mesmo padrão...
-        // Fallback para EN (para brevidade, mas as 10 línguas devem estar aqui)
-    };
-
-    const userLang = navigator.language.split('-')[0] || 'en';
-    const langData = content[userLang] || content.en;
-
-    // 2. Lógica de Gravidade (Matter.js)
-    const { Engine, Render, Runner, Bodies, Composite, Events } = Matter;
-    const engine = Engine.create();
-    const world = engine.world;
-    const render = Render.create({
-        element: document.body,
-        engine: engine,
-        options: { width: window.innerWidth, height: window.innerHeight, wireframes: false, background: 'transparent' }
-    });
-
-    const ground = Bodies.rectangle(window.innerWidth/2, window.innerHeight + 25, window.innerWidth, 50, { isStatic: true, render: { visible: false } });
-    Composite.add(world, ground);
-
-    let fallenBodies = [];
-    let riseBodies = [];
-
-    function createWordBody(text, x, y, isStatic, color, fontSize) {
-        const canvas = document.createElement('canvas');
-        canvas.width = text.length * fontSize * 1.1;
-        canvas.height = fontSize * 2;
-        const ctx = canvas.getContext('2d');
-        ctx.font = `bold ${fontSize}px 'Courier New'`;
-        ctx.fillStyle = color;
-        ctx.textAlign = 'center';
-        ctx.shadowColor = color; ctx.shadowBlur = 10;
-        ctx.fillText(text, canvas.width / 2, fontSize * 1.3);
-
-        return Bodies.rectangle(x, y, canvas.width, canvas.height, {
-            render: { sprite: { texture: canvas.toDataURL() } },
-            restitution: 0.3, friction: 0.1, frictionAir: isStatic ? 0.05 : 0.01,
-            isStatic: isStatic, label: text, isDor: !isStatic // Identificador
-        });
-    }
-
-    // 📡 Sequência do Terminal
-    function showText(id, delay) {
-        setTimeout(() => document.getElementById(id).classList.add('visible'), delay);
-    }
-
-    // --- CICLO I: A DOR DESPENCA ---
-    showText('l1', 500);
-    showText('l2', 1500);
-    showText('l3', 2500);
-    showText('l4', 3500);
-
-    // Iniciar queda das palavras de dor
-    setTimeout(() => {
-        langData.fall.forEach((word, index) => {
-            setTimeout(() => {
-                const body = createWordBody(word, Math.random() * (window.innerWidth - 100) + 50, -50, false, '#ff4141', 26); // Vermelho da dor
-                body.restitution = 0.6; // Kica mais
-                fallenBodies.push(body);
-                Composite.add(world, body);
-            }, index * 600);
-        });
-    }, 4500);
-
-    // --- CICLO II: O VETO CINÉTICO INTERATIVO ---
-    // Detectar cliques nas palavras de dor
-    render.canvas.addEventListener('mousedown', function(event) {
-        const mousePosition = { x: event.clientX, y: event.clientY };
-        const clickedBody = fallenBodies.find(body => Matter.Bounds.contains(body.bounds, mousePosition));
-
-        if (clickedBody) {
-            // Explodir a palavra (remover do mundo e criar partículas)
-            Composite.remove(world, clickedBody);
-            fallenBodies = fallenBodies.filter(b => b !== clickedBody);
-            spawnParticles(clickedBody.position.x, clickedBody.position.y);
-            
-            checkVictory();
-        }
-    });
-
-    function spawnParticles(x, y) {
-        for (let i = 0; i < 20; i++) {
-            const particle = Bodies.circle(x, y, 3, {
-                render: { fillStyle: '#00ff41' },
-                frictionAir: 0.03,
-                collisionFilter: { group: -1 } // Não colidir com outras
-            });
-            Composite.add(world, particle);
-            setTimeout(() => Composite.remove(world, particle), 1500); // Somem depois
-        }
-    }
-
-    // --- CICLO III: A GÊNESE DO FUTURO ---
-    let victoryChecked = false;
-    function checkVictory() {
-        if (fallenBodies.length === 0 && !victoryChecked) {
-            victoryChecked = true;
-            triggerRise();
-        }
-    }
-
-    function triggerRise() {
-        // Mudar Terminal
-        document.getElementById('l3').innerHTML = `> [ STATUS: <span class="highlight">PASSADO NEUTRALIZADO</span> ]`;
-        document.getElementById('l4').innerHTML = `> [ GÊNESE: O FUTURO ESTÁ SENDO INSTALADO ]`;
-
-        // Iniciar subida das palavras de futuro
-        langData.rise.forEach((word, index) => {
-            setTimeout(() => {
-                const body = createWordBody(word, Math.random() * (window.innerWidth - 150) + 75, window.innerHeight + 100, false, '#00ff41', 28);
-                body.isStatic = false; // Elas flutuam
-                body.force = { x: 0, y: -0.1 }; // Força para cima
-                Composite.add(world, body);
-                riseBodies.push(body);
-            }, index * 800);
-        });
-
-        // Evento para fazer elas flutuarem
-        Events.on(engine, 'afterUpdate', () => {
-            riseBodies.forEach(body => {
-                Matter.Body.applyForce(body, body.position, { x: 0, y: -0.005 });
-                if (body.position.y < -100) body.position.y = window.innerHeight + 100; // Loop se subir demais
-            });
-        });
-
-        // Mostrar Botão Final
-        setTimeout(() => {
-            document.getElementById('confirm-btn').style.display = 'block';
-        }, 6000);
-    }
-
-    Render.run(render);
-    Runner.run(Runner.create(), engine);
-
-    // Botão que leva ao Manifesto (PDF ou MD)
-    document.getElementById('confirm-btn').addEventListener('click', () => {
-        window.location.href = 'manifesto_en.pdf'; // Mudar para o PDF ou página MD
-    });
+(function(){
+const _C64 = "eyJlbiI6eyJzIjoiQUVUSEVSX0xPQURJTkciLCJpIjoiaW5lcnRpYS5zeXMiLCJ0IjoiaGl0X3BhaW4uZXhlIiwiYSI6IkVOVEVSX0hPUklaT04iLCJmIjpbIkJJTExTIiwiUkVOVCIsIkJPU1MiLCJERUJULCIsIlZJT0xFTkNFIiwiRkVBUiIsIlRSQVBQRUQiLCJIVU5HRVIiXSwiciI6WyJGQU1JTFkiLCJTTEVFUCIsIkFSVCIsIlNQT1JUUyIsIlBFQUNFIiwiRk9PRCIsIkZSRUVET00iXX0sInB0Ijp7InMiOiJBRVRIRVJfQ0FSUkVHQU5ETyIsImkiOiJwZXNvX21vcnRvLnN5cyIsInQiOiJ0b3F1ZV9uYV9kb3IuZXhlIiwiYSI6IkVOVFJBUl9OT19IT1JJWk9OVEUiLCJmIjpbIkNPTlRBUyIsIkFMVUdVRUwiLCJQQVRSw08iLCJERVBPU0lUTyIsIlZJT0zDik5DSUEiLCJNRURPIiwiUFJFU08iLCJGT01FIl0sInIiOlsiRkFNC1xJQUwiLCJTT05PIiwiQVJURSIsIkVTUE9SVEVTIiwiUEFaIiwiQ09NSURBIiwiTElCRVJEQU1FIl19fQ==";
+const _D = JSON.parse(atob(_C64));
+const _LN = navigator.language.split('-')[0]||'en';
+const _CFG = _D[_LN]||_D.en;
+document.getElementById('_L1').innerText=`> [ ${_CFG.s} ]`;
+document.getElementById('_L2').innerText=`> [ ${_CFG.i} ]`;
+document.getElementById('_L3').innerHTML=`> [ ${_CFG.t} ]`;
+document.getElementById('_EXEC').innerText=_CFG.a;
+const {Engine:_E,Render:_R,Runner:_RN,Bodies:_B,Composite:_CP,Events:_EV}=Matter;
+const _eng=_E.create();
+const _wld=_eng.world;
+const _rnd=_R.create({element:document.body,engine:_eng,options:{width:window.innerWidth,height:window.innerHeight,wireframes:false,background:'transparent'}});
+const _grd=_B.rectangle(window.innerWidth/2,window.innerHeight+25,window.innerWidth,50,{isStatic:true,render:{visible:false}});
+_CP.add(_wld,_grd);
+let _bds=[],_up=[];
+function _spw(t,x,y,d,c,s){
+const cv=document.createElement('canvas');
+cv.width=t.length*s*1.2;cv.height=s*2.5;
+const ct=cv.getContext('2d');
+ct.font=`bold ${s}px 'Courier New'`;ct.fillStyle=c;ct.textAlign='center';
+if(d){ct.shadowColor=c;ct.shadowBlur=15}
+ct.fillText(t,cv.width/2,s*1.5);
+const b=_B.rectangle(x,y,cv.width,cv.height,{render:{sprite:{texture:cv.toDataURL()}},restitution:.6,friction:.1,frictionAir:d?.01:.03,isStatic:false,label:t});
+b._isD=d;return b;
+}
+const _sh=(id,ms)=>setTimeout(()=>document.getElementById(id).classList.add('_V'),ms);
+_sh('_L1',500);_sh('_L2',1200);_sh('_L3',2000);
+setTimeout(()=>{
+_CFG.f.forEach((w,i)=>{
+setTimeout(()=>{
+const b=_spw(w,Math.random()*(window.innerWidth-100)+50,-50,true,'#ff4141',28);
+_bds.push(b);_CP.add(_wld,b);
+},i*600);
+});
+},3000);
+_rnd.canvas.addEventListener('mousedown',e=>{
+const m={x:e.clientX,y:e.clientY};
+const t=_bds.find(b=>Matter.Bounds.contains(b.bounds,m));
+if(t){
+_CP.remove(_wld,t);_bds=_bds.filter(b=>b!==t);
+for(let i=0;i<15;i++){
+const p=_B.circle(t.position.x,t.position.y,2,{render:{fillStyle:'#00ff41'},frictionAir:.05,collisionFilter:{group:-1}});
+_CP.add(_wld,p);setTimeout(()=>_CP.remove(_wld,p),1000);
+}
+if(_bds.length===0)_vct();
+}
+});
+let _v=false;
+function _vct(){
+if(_v)return;_v=true;
+document.getElementById('_L2').innerHTML=`> [ SYS_STATUS: VOID_CLEARED ]`;
+document.getElementById('_L3').innerHTML=`> [ INITIALIZING_HORIZON_STATE ]`;
+_CFG.r.forEach((w,i)=>{
+setTimeout(()=>{
+const b=_spw(w,Math.random()*(window.innerWidth-150)+75,window.innerHeight+100,false,'#00ff41',30);
+_CP.add(_wld,b);_up.push(b);
+},i*800);
+});
+_EV.on(_eng,'afterUpdate',()=>{
+_up.forEach(b=>{
+Matter.Body.applyForce(b,b.position,{x:0,y:-.006});
+if(b.position.y<-150)b.position.y=window.innerHeight+150;
+});
+});
+setTimeout(()=>document.getElementById('_EXEC').style.display='block',6000);
+}
+_R.run(_rnd);_RN.run(_RN.create(),_eng);
+document.getElementById('_EXEC').onclick=()=>window.location.href='manifesto.html';
+})();
 </script>
-
 </body>
 </html>
